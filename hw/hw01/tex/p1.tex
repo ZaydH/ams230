@@ -48,9 +48,30 @@ The Hessian~$\nabla^2 f(x)$ equals:
   Show that $x^{*} = (1,1)\transpose$ is the only local minimizer of the function, and that the Hessian at that point is positive definite.
 \end{subproblem}
 
+To determine the minimizer(s) (if any), set the gradient equal to~0.  Therefore,
+
+\[  \begin{bmatrix}
+      400 x_{1}^3 - 400x_{1}x_{2} +2x_1 -2 \\
+      200 x_{2} - 200 x_{1}^{2}
+    \end{bmatrix}  
+    = \begin{bmatrix}
+        0 \\ 0
+      \end{bmatrix} \textrm{.} \]
 
 \noindent
-The Hessian matrix~$\nabla^{2}f(x^{*})$of the Rosenbrock function equals:
+Therefore, $x_2 = x_{1}^{2}$.  If we substitute this into the first equation, we get:
+
+\begin{aligncustom}
+  400 x_{1}^3 - 400x_{1}x_{2} +2x_1 -2 &= 0 \\
+  400 x_{1}^3 - 400x_{1}x_{1}^2 +2x_1 -2 &= 0 \\
+  2x_1 -2 &= 0 \\
+  x_1 = 1
+\end{aligncustom}
+
+\noindent
+It is clear then that the only root is $\boxed{(1,1)\transpose}$.
+
+The Hessian matrix~$\nabla^{2}f(x^{*})$ of the Rosenbrock function equals:
 
 \[
 \nabla^{2}f(x^{*}) =  \begin{bmatrix}
@@ -59,37 +80,17 @@ The Hessian matrix~$\nabla^{2}f(x^{*})$of the Rosenbrock function equals:
                       \end{bmatrix} \textrm{.}\]
 
 \noindent
-A ${n\times n}$ matrix,~$A$, is positive definite (PD) if for all non-zero vectors,~${x \in \mathbb{R}^n}$, it holds that
-
-\[x \transpose A x > 0 \textrm{.} \]
-
-\noindent
-Define $x=(a,b)\transpose$, then:
+Hessian matrix,~$\nabla^{2}f(x^{*})$, is positive definite (PD) if all of its eigenvalues are positive.  These are found via:
 
 \begin{aligncustom}
-  x \transpose \nabla^{2}f(x^{*}) x 
-                  &=  \begin{bmatrix}
-                        a & b
-                      \end{bmatrix}
-                      \begin{bmatrix}
-                        802 & -400 \\
-                        -400 & 200
-                      \end{bmatrix}
-                      \begin{bmatrix}
-                        a \\ b
-                      \end{bmatrix} \\
-                  &=  \begin{bmatrix}
-                        802a -400b & -400a + 200b
-                      \end{bmatrix}
-                      \begin{bmatrix}
-                        a \\ b
-                      \end{bmatrix} \\
-                  &=  \boxed{
-                        \begin{bmatrix}
-                          802a^2 -400ab -400ab + 200b^2
-                        \end{bmatrix}
-                      }
+  \abs{A-\lambda I}  =  \begin{vmatrix}
+                          802 - \lambda  & -400 \\
+                          -400           & 200 - \lambda
+                        \end{vmatrix}
+                    &=  0 \\
+  160400 - 1002 \lambda + \lambda^2 - 160000 &= 0 \\
+  400- 1002 \lambda + \lambda^2 &= 0
 \end{aligncustom}
 
 \noindent
-Clearly, for any non-zero vector,~$x$, where $a,b\in \mathbb{R}$, $x\transpose \nabla^{2}f(x^{*}) x$ is positive making $\textbackslash\{\}nabla\^{}\{2\}f(x\^{}\{*\})$ PD.
+Solving for $\lambda$ (in Matlab), the eigenvalues are $\boxed{\lambda_1\approx 0.3994}$ and $\boxed{\lambda_2 \approx 1001.6}$.  Therefore, $\nabla^{2}f(x^{*})$ is PD.

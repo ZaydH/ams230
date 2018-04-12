@@ -1,6 +1,33 @@
 \begin{problem}
   Exercise 2.9 in Nocedal and Wright.
-  
-  
+
+  Consider the function $f(x_1,x_2)=(x_1+x_2^2)^2$. At the point $x\transpose = (1, 0)$, we consider the search direction $p\transpose = (-1, 1)$. Show that $p$ is a descent direction.
 \end{problem}
+
+Any vector $p$ is a descent direction if $p \cdot \nabla f(x_1,x_2) <0$.  The gradient of ${f(x_1,x_2)}$ equals:
+
+\begin{aligncustom}
+  \nabla f(x_1,x_2) &=  \begin{bmatrix}
+                          \frac{\partial f(x_1,x_2)}{\partial x_1} \\
+                          \frac{\partial f(x_1,x_2)}{\partial x_2}
+                        \end{bmatrix} \\
+                    &=  \begin{bmatrix}
+                          2 (x_1+x_2^2) \\
+                          4 x_2 (x_1+x_2^2)
+                        \end{bmatrix}
+\end{aligncustom}
+
+\noindent
+Therefore, the gradient at $(1,0)\transpose$ equals $(2,0)\transpose$.  The inner product is in turn:
+
+\[ \begin{bmatrix} -1 \\ 1 \end{bmatrix} \cdot \begin{bmatrix}2 \\ 0\end{bmatrix} = -1 \cdot 2 + 1 \cdot 0 = \boxed{-2 < 0} \textrm{,} \]
+
+\noindent
+making $p$ a descent direction.
+
+\begin{subproblem}
+  Find all minimizers of the problem~(2.10).
+\end{subproblem}
+
+
 
