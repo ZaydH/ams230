@@ -1,8 +1,8 @@
 \begin{problem}
   Consider the problem of minimizing:
-  
+
   \[ f(x_1,x_2) = (cx_{1} - 2)^4 + x_{2}^{2}(cx_{1}-2)^{2} -(x_{2} + 1)^{2} \textrm{,} \]
-  
+
   \noindent
   where $c$ is a nonzero parameter.
 \end{problem}
@@ -12,23 +12,41 @@
 \end{subproblem}
 
 \noindent
-$\nabla f(x)$ is:
-
 \begin{aligncustom}
   \nabla f(x) &=  \begin{bmatrix}
-                    \frac{\partial f(x)}{\partial x_1} \\
-                    \frac{\partial f(x)}{\partial x_2}
-                  \end{bmatrix} \\
-              &=  \boxed{
-                    \begin{bmatrix}
-                      4c (cx_{1} - 2)^{3} + 2cx_{2}^{2}(cx_{1}-2) \\
-                      \frac{\partial f(x)}{\partial x_2}
-                    \end{bmatrix}
-                  }  
+                          \frac{\partial f(x)}{\partial x_1} \\
+                          \frac{\partial f(x)}{\partial x_2}
+                        \end{bmatrix} \\
+                    &=  \boxed{
+                          \begin{bmatrix}
+                            4c (cx_{1} - 2)^{3} + 2cx_{2}^{2}(cx_{1}-2) \\
+                            2x_2(cx_1-2)^2 - 2(x_2 + 1)
+                          \end{bmatrix}
+                        }
+\end{aligncustom}
+
+\begin{aligncustom}
+  \nabla^{2} f(x) &=  \begin{bmatrix}
+                        \frac{\partial^{2} f(x)}{\partial x_1^{2}} & \frac{\partial^{2} f(x)}{\partial x_1 \partial x_2} \\
+                        \frac{\partial^{2} f(x)}{\partial x_2 \partial x_1} & \frac{\partial^{2} f(x)}{\partial x_{2}^{2}}
+                      \end{bmatrix} \\
+                  &=  \boxed{
+                        \begin{bmatrix}
+                          12c^2 (cx_{1} - 2)^{2} + 2c^2x_{2}^{2} & 4cx_2(cx_1 - 2) \\
+                          4cx_2(cx_1 - 2) & 2(cx_1-2)^2 - 2
+                        \end{bmatrix}
+                      }\textrm{.}
+\end{aligncustom}
+
+The optimal solution occurs when the gradient equals~0. We find then:
+
+\begin{aligncustom}
+  4c (cx_{1} - 2)^{3} + 2cx_{2}^{2}(cx_{1}-2) &= 0 \\
+  2 (cx_{1} - 2)^{2} + x_{2}^{2} &= 0 \\
 \end{aligncustom}
 
 \begin{subproblem}
-  Program the steepest descent method (using your program from Problem~5 to find the step length).
+  Program the steepest descent method (using your program from Problem~\ref{prob:ProgAlg} to find the step length).
 \end{subproblem}
 
 \begin{subproblem}

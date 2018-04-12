@@ -85,7 +85,8 @@
 }
 \newenvironment{problem}
 {%
-  \stepcounter{problemCount} % Increment the subproblem counter.  This must be before the exercise to ensure proper numbering of claims and lemmas.
+  \refstepcounter{problemCount} % Increment the subproblem counter.  This must be before the exercise to ensure proper numbering of claims and lemmas.
+  % Ref in the step counter allows the problem number to be labelled
   \begin{problemshell}
     \noindent \textit{Exercise~\#\arabic{problemCount}} \\
   }
