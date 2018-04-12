@@ -38,12 +38,23 @@
                       }\textrm{.}
 \end{aligncustom}
 
-The optimal solution occurs when the gradient equals~0. We find then:
+The optimal solution occurs when the gradient equals~$\vec{0}$. We find then:
+
+\begin{aligncustom}
+  2x_2(cx_1-2)^2 - 2(x_2 + 1) &= 0 \\ 
+  x_2(cx_1-2)^2 - x_2 &= 1 \\ 
+  x_2 = \frac{1}{(cx_1-2)^2 - 1}
+\end{aligncustom}
+
 
 \begin{aligncustom}
   4c (cx_{1} - 2)^{3} + 2cx_{2}^{2}(cx_{1}-2) &= 0 \\
   2 (cx_{1} - 2)^{2} + x_{2}^{2} &= 0 \\
+  x_{2}^{2} &= -2 (cx_{1} - 2)^{2} \\
 \end{aligncustom}
+
+Substituting that into the other function, we get
+
 
 \begin{subproblem}
   Program the steepest descent method (using your program from Problem~\ref{prob:ProgAlg} to find the step length).
