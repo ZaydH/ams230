@@ -2,8 +2,8 @@
 
 
 \newcommand{\name}{Zayd Hammoudeh}
-\newcommand{\course}{CSXXXX}
-\newcommand{\assnName}{<Assignment Name>}
+\newcommand{\course}{AMS230}
+\newcommand{\assnName}{Homework \#1}
 
 \usepackage{fullpage}
 \usepackage[skip=4pt]{caption}      % ``skip'' sets the spacing between the figure and the caption.
@@ -79,12 +79,13 @@
     \par\medskip
   \end{addmargin}
 }
-\newenvironment{problem}[3]
+\newenvironment{problem}
 {%
+  \stepcounter{problemCount} % Increment the subproblem counter.  This must be before the exercise to ensure proper numbering of claims and lemmas.
   \begin{problemshell}
-    \noindent \textit{Chapter \##1.#2, Exercise~\##3} \\
-}
-{
+    \noindent \textit{Exercise~\#\arabic{problemCount}} \\
+  }
+  {
   \end{problemshell}
   \setcounter{subProbCount}{1} % Reset the subproblem counter
 }
@@ -111,28 +112,39 @@
 }
 
 
+\newcommand{\transpose}{^{\textrm{T}}}
 
 
 \begin{document}
   \maketitle
 
-  \begin{problem}{<Chapter Number>}{<Section Number>}{<Problem Number>}
-    Problem first line
+  \noindent
+  \textbf{Name}: Zayd Hammoudeh \\
+  \textbf{Course Name}: \course \\
+  \textbf{Assignment Name}: \assnName \\
+  \textbf{Due Date}: April 18, 2018 \\
+  \textbf{Student Discussions}: I discussed the problems with the following students.  All write-ups were prepared separately and independently. \\
+  \begin{itemize}
+    \item 
+  \end{itemize}
 
-    Problem second line
-  \end{problem}
-
-  First line answer.
-
-
-  Second line answer.
-
-
-  \begin{subproblem}
-    Subproblem line.
-  \end{subproblem}
-
-  Subproblem answer.
+  \newpage
+  \input{p1}
+  
+  \newpage
+  \input{p2}
+  
+  \newpage
+  \input{p3}
+  
+  \newpage
+  \input{p4}
+  
+  \newpage
+  \input{p5}
+  
+  \newpage
+  \input{p6}
 
 \end{document}
 

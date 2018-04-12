@@ -1,0 +1,40 @@
+\begin{problem}
+  Consider the problem of minimizing:
+  
+  \[ f(x_1,x_2) = (cx_{1} - 2)^4 + x_{2}^{2}(cx_{1}-2)^{2} -(x_{2} + 1)^{2} \textrm{,} \]
+  
+  \noindent
+  where $c$ is a nonzero parameter.
+\end{problem}
+
+\begin{subproblem}
+  Compute $\nabla f(x)$ and $\nabla f^{2}(x)$, and find the optimal solution.
+\end{subproblem}
+
+\noindent
+$\nabla f(x)$ is:
+
+\begin{aligncustom}
+  \nabla f(x) &=  \begin{bmatrix}
+                    \frac{\partial f(x)}{\partial x_1} \\
+                    \frac{\partial f(x)}{\partial x_2}
+                  \end{bmatrix} \\
+              &=  \boxed{
+                    \begin{bmatrix}
+                      4c (cx_{1} - 2)^{3} + 2cx_{2}^{2}(cx_{1}-2) \\
+                      \frac{\partial f(x)}{\partial x_2}
+                    \end{bmatrix}
+                  }  
+\end{aligncustom}
+
+\begin{subproblem}
+  Program the steepest descent method (using your program from Problem~5 to find the step length).
+\end{subproblem}
+
+\begin{subproblem}
+  Use your program to numerically solve this problem under two cases: i) $c=1$, ii) $c=10$.  Compare the convergence in these two cases.
+\end{subproblem}
+
+\begin{subproblem}
+  Using Theorem 3.4, explain why as $c$ increases the convergence of the steepest descent method deteriorates.
+\end{subproblem}
