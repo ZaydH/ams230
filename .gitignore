@@ -260,3 +260,8 @@ TSWLatexianTemp*
 # standalone packages
 *.sta
 
+#=========================================
+# Intelli-J and Mac Files
+#=========================================
+.DS_Store
+.idea/
