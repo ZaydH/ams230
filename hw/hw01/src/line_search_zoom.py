@@ -1,4 +1,5 @@
 import argparse
+import logging
 import math
 from typing import Callable, List
 import matplotlib.pyplot as plt
@@ -18,7 +19,7 @@ class HW1:
     phi = None  # type: Callable
     d_phi = None  # type: Callable
 
-    tolerance = 0.001
+    tolerance = 10 ** -16
 
     max_line_search_attempts = 1000
     C1 = 0.1
@@ -34,7 +35,12 @@ class HW1:
         """
         x_k = [x_0]
         err = [abs(HW1.f(x_0) - HW1.min_err)]
+
+        logging_freq = 10
         while err[-1] > HW1.tolerance:
+            k = len(err) - 1
+            if k > 0 and k % logging_freq == 0:
+                logging.info("k={k} -- Err is {err[-1]}")
 
             p = HW1.calculate_steepest_descent_direction(x_k[-1])
             HW1.build_phi(c, x_k[-1], p)
@@ -45,8 +51,8 @@ class HW1:
             err.append(HW1.calculate_err(x_k[-1]))
 
         log_err = [math.log10(e) for e in err]
-        HW1._build_plot(List(range(0, len(log_err))), log_err, log_y=True, x_label="Iteration #",
-                        y_label="Error", title="Steepest Descent Learning with c=%d" % c)
+        HW1._build_plot(list(range(0, len(log_err))), log_err, log_y=True, x_label="Iteration #",
+                        y_label="log_10 Error", title="Steepest Descent Learning with c=%d" % c)
 
     @staticmethod
     def calculate_err(x: List[float]) -> float:
@@ -102,7 +108,7 @@ class HW1:
 
             phi_alpha = HW1.phi(alpha)
             if phi_alpha > phi_al_0 + HW1.C1 * alpha * d_phi_al_0 \
-                    or (i > 1 and phi_alpha > prev_phi_alpha):
+                    or (i > 1 and phi_alpha >= prev_phi_alpha):
                 return HW1.zoom(prev_alpha, alpha)
 
             d_phi_alpha = HW1.d_phi(alpha)
@@ -165,7 +171,7 @@ class HW1:
         if log_x:
             plt.xscale('log')
         if log_y:
-            plt.yscale('log')
+            plt.yscale('symlog')
 
         # Configure the label and title.
         if x_label:
@@ -175,7 +181,8 @@ class HW1:
         if title:
             plt.title(title)
         # Ensure a consistent x-axis even if there is insufficient y-data.
-        plt.xlim(0.9 * min(x_data), 1.1 * max(x_data))
+        plt.xlim(min(x_data), max(x_data))
+        plt.ylim(10 * min(y_data), 10 * max(y_data))
 
         # Save the figure with the plot
         # plt.show()
@@ -214,10 +221,11 @@ def build_phi(c: float, x_k: List[float], p_k: List[float]):
                              + (x_a_p(1, alpha) ** 2) * ((c * x_a_p(0, alpha) - 2) ** 2)
                              + (x_a_p(1, alpha) + 1) ** 2)
 
-    HW1.d_phi = lambda alpha: (4 * c * p_k[0] * (x_a_p(0, alpha) - 2) ** 3
-                               + 2 * p_k[1] * (x_a_p(1, alpha) + 1)
+    HW1.d_phi = lambda alpha: (4 * c * p_k[0] * (c * x_a_p(0, alpha) - 2) ** 3
                                + 2 * p_k[1] * x_a_p(1, alpha) * (c * x_a_p(0, alpha) - 2) ** 2
-                               + (x_a_p(1, alpha) ** 2))
+                               + 2 * c * p_k[0] * (x_a_p(1, alpha) ** 2) * (c * x_a_p(0, alpha) - 2)
+                               + 2 * p_k[1] * (x_a_p(1, alpha) + 1)
+                               )
 
 
 def build_p6_f_and_gradient(c):
