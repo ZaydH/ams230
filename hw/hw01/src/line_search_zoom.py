@@ -51,8 +51,9 @@ class HW1:
             err.append(HW1.calculate_err(x_k[-1]))
 
         log_err = [math.log10(e) for e in err]
-        HW1._build_plot(list(range(0, len(log_err))), log_err, log_y=True, x_label="Iteration #",
-                        y_label="log_10 Error", title="Steepest Descent Learning with c=%d" % c)
+        HW1._build_plot(list(range(0, len(log_err))), log_err, log_y=True,
+                        x_label="Iteration Number", y_label="log_10 Error",
+                        title="Steepest Descent Learning with c=%d" % c)
 
     @staticmethod
     def calculate_err(x: List[float]) -> float:
@@ -186,8 +187,15 @@ class HW1:
 
         # Save the figure with the plot
         # plt.show()
-        fig.savefig(title.replace(" ", "_").replace(",", "").lower() + ".png")
+        filename = title.replace(" ", "_").replace(",", "").lower()
+        fig.savefig(filename + ".png")
         plt.close(fig)
+
+        # Export a CSV of the data for plotting in LaTeX
+        with open(filename + ".csv", "w") as fout:
+            fout.write("%s,%s" % (x_label, y_label))
+            for x_i, y_i in zip(x_data, y_data):
+                fout.write("\n%f,%f" % (x_i, y_i))
 
     @staticmethod
     def setup_logger(filename="tester.log", log_level=logging.DEBUG):

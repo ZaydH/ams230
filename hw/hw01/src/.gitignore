@@ -1,3 +1,7 @@
+# Intelli-J and log files
+.idea/
+*.log
+
 # Windows default autosave extension
 *.asv
 

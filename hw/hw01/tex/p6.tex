@@ -51,12 +51,13 @@ The gradient,~$\nabla f(x)$, above was set equal to~$\vec{0}$ and the roots were
 This matrix has eigenvalues $2c ^ 2$ and $2$.  Since $c \ne 0$ by definition, this matrix is positive definition for all valid values of $c$.
 
 \begin{subproblem}
-  Program the steepest descent method (using your program from Problem~\ref{prob:ProgAlg} to find the step length).
+  Program the steepest descent method (using your program from Problem~\ref{prob:ProgAlg} to find the step length).  Use your program to numerically solve this problem under two cases: i) $c=1$, ii) $c=10$.  Compare the convergence in these two cases.
 \end{subproblem}
 
-\begin{subproblem}
-  Use your program to numerically solve this problem under two cases: i) $c=1$, ii) $c=10$.  Compare the convergence in these two cases.
-\end{subproblem}
+\noindent
+Figures~\ref{fig:p6C=1} and~\ref{fig:p6C=10} show the results of exact line search with the steepest descent method for $x_0\transpose = [10, 10]$ for $c=1$ and $c=10$ respectively.  The error tolerance was set to $10^{-16}$.  Note that for $c=1$, the result converged in only 7~iterations.  In contrast for $c=10$, convergence took 1,703~iterations.
+
+\input{p6_plots}
 
 \begin{subproblem}
   Using Theorem 3.4, explain why as $c$ increases the convergence of the steepest descent method deteriorates.
