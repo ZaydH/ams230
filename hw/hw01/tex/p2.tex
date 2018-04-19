@@ -18,16 +18,37 @@ Any vector $p$ is a descent direction if $p \cdot \nabla f(x_1,x_2) <0$.  The gr
 \end{aligncustom}
 
 \noindent
-Therefore, the gradient at $(1,0)\transpose$ equals $(2,0)\transpose$.  The inner product is in turn:
+Therefore, the gradient at $(1,0)\transpose$ equals $(2,0)\transpose$.  If the inner product of the gradient and $p$ are negative, then $p$ is a descent direction.  Since 
 
-\[ p \cdot \nabla = \begin{bmatrix} -1 \\ 1 \end{bmatrix} \cdot \begin{bmatrix}2 \\ 0\end{bmatrix} = -1 \cdot 2 + 1 \cdot 0 = \boxed{-2 < 0} \textrm{,} \]
+\[ p \cdot \nabla f(x) = \begin{bmatrix} -1 \\ 1 \end{bmatrix} \cdot \begin{bmatrix}2 \\ 0\end{bmatrix} = -1 \cdot 2 + 1 \cdot 0 = \boxed{-2 < 0} \textrm{,} \]
 
 \noindent
-making $p$ a descent direction.
+$p$ is a descent direction.
 
 \begin{subproblem}
-  Find all minimizers of the problem~(2.10).
+  Find all minimizers of the equation~(2.10).
 \end{subproblem}
 
+Equation~(2.10) in the text states:
 
+\[ \min_{\alpha > 0} f(x_k + \alpha p_k) \textrm{.} \]
 
+\noindent
+Substituting into $f$ as described above, we get:
+
+\begin{aligncustom}
+  f(\vec{x} + \alpha \vec{p}) &= \left((x_1 + \alpha p_1) + (x_2 + \alpha p_2)^2 \right)^2 \\
+                  &= ((1 - 1\cdot \alpha) + (0 + \alpha \cdot 1)^2)^2 \\
+                  &= (\alpha^2 - \alpha + 1)^2 \text{.}
+\end{aligncustom}
+
+\noindent
+To determine the minimizers, take the derivative of the above function with respect to $\alpha$ and set the equation equal to zero as shown below.
+
+\begin{aligncustom}
+  \frac{\partial f(x + \alpha p)}{\partial \alpha} &=  2(2\alpha - 1)(\alpha^2 - \alpha + 1) \\
+  (2\alpha - 1)(\alpha^2 - \alpha + 1) &= 0
+\end{aligncustom}
+
+\noindent
+The only real minimizer is at $\alpha^{*} = \frac{1}{2}$.  There are two imaginary minimizers at $\frac{1 \pm i\sqrt{3}}{2}$.

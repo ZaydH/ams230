@@ -1,4 +1,28 @@
 \begin{problem}
-  Consider the steepest descent method with exact line searches pplied to the convex quadratic function $f(x)=\frac{1}{2}x\transpose Q x$, where $Q$ is symmetric and positive definite.  Show that the search direction at step $k+1$ is always orthogonal to the search direction at step~$k$, i.e.,~$p_{k}p_{k+1} = 0$ for all $k$.
+  Consider the steepest descent method with exact line searches applied to the convex quadratic function $f(x)=\frac{1}{2}x\transpose Q x - b\transpose x$, where $Q$ is symmetric and positive definite.  Show that the search direction at step $k+1$ is always orthogonal to the search direction at step~$k$, i.e.,~$p_{k}\transpose p_{k+1} = 0$ for all $k$.
 \end{problem}
+
+\noindent
+In exact line search, the step size $\alpha$ is chosen such that:
+
+\[ \alpha_k = \arg \min_{\alpha} f(x_k + \alpha p_k)\textrm{.} \]
+
+\noindent
+Therefore, taking the derivative of $f_{k+1}$ with respect to $\alpha$ yields:
+
+\[ \frac{\partial f_{k+1}}{\partial \alpha_{k+1}} = 0 \textrm{.} \]
+
+\noindent
+By the chain rule, this becomes,
+
+\[ \frac{\partial f_{k+1}}{\partial x_{k+1}} \cdot \frac{\partial x_{k+1}}{\partial \alpha_{k+1}} = 0 \textrm{.} \]
+
+\noindent
+Knowing that ${x_{k+1} = x_k + \alpha p_k}$, we can rearrange the terms to prove the required statement:
+
+\begin{aligncustom}
+  \nabla\transpose f_{k+1} p_k &= 0 \\
+  p_{k+1}\transpose p_k &= 0 \\
+  p_{k}\transpose p_{k+1} &= 0\textrm{.}
+\end{aligncustom}
 

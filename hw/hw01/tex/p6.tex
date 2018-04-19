@@ -1,7 +1,7 @@
 \begin{problem}
   Consider the problem of minimizing:
 
-  \[ f(x_1,x_2) = (cx_{1} - 2)^4 + x_{2}^{2}(cx_{1}-2)^{2} -(x_{2} + 1)^{2} \textrm{,} \]
+  \[ f(x_1,x_2) = (cx_{1} - 2)^4 + x_{2}^{2}(cx_{1}-2)^{2} + (x_{2} + 1)^{2} \textrm{,} \]
 
   \noindent
   where $c$ is a nonzero parameter.
@@ -20,7 +20,7 @@
                     &=  \boxed{
                           \begin{bmatrix}
                             4c (cx_{1} - 2)^{3} + 2cx_{2}^{2}(cx_{1}-2) \\
-                            2x_2(cx_1-2)^2 - 2(x_2 + 1)
+                            2x_2(cx_1-2)^2 + 2(x_2 + 1)
                           \end{bmatrix}
                         }
 \end{aligncustom}
@@ -33,28 +33,22 @@
                   &=  \boxed{
                         \begin{bmatrix}
                           12c^2 (cx_{1} - 2)^{2} + 2c^2x_{2}^{2} & 4cx_2(cx_1 - 2) \\
-                          4cx_2(cx_1 - 2) & 2(cx_1-2)^2 - 2
+                          4cx_2(cx_1 - 2) & 2(cx_1-2)^2 + 2
                         \end{bmatrix}
                       }\textrm{.}
 \end{aligncustom}
 
-The optimal solution occurs when the gradient equals~$\vec{0}$. We find then:
+The gradient,~$\nabla f(x)$, above was set equal to~$\vec{0}$ and the roots were solved for in Maple.  It returned root~$\boxed{\left(\frac{2}{c}, -1\right)\transpose}$.  To verify it is a local minimum, we need to substitute this into the Hessian.  Therefore,
 
 \begin{aligncustom}
-  2x_2(cx_1-2)^2 - 2(x_2 + 1) &= 0 \\ 
-  x_2(cx_1-2)^2 - x_2 &= 1 \\ 
-  x_2 = \frac{1}{(cx_1-2)^2 - 1}
+    \nabla^{2} f(x^{*}) &=  \begin{bmatrix}
+                              2c^2 & 0 \\
+                              0    & 2
+                            \end{bmatrix}
 \end{aligncustom}
 
-
-\begin{aligncustom}
-  4c (cx_{1} - 2)^{3} + 2cx_{2}^{2}(cx_{1}-2) &= 0 \\
-  2 (cx_{1} - 2)^{2} + x_{2}^{2} &= 0 \\
-  x_{2}^{2} &= -2 (cx_{1} - 2)^{2} \\
-\end{aligncustom}
-
-Substituting that into the other function, we get
-
+\noindent
+This matrix has eigenvalues $2c ^ 2$ and $2$.  Since $c \ne 0$ by definition, this matrix is positive definition for all valid values of $c$.
 
 \begin{subproblem}
   Program the steepest descent method (using your program from Problem~\ref{prob:ProgAlg} to find the step length).
