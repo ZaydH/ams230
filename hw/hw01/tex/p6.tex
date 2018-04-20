@@ -54,11 +54,34 @@ This matrix has eigenvalues $2c ^ 2$ and $2$.  Since $c \ne 0$ by definition, th
   Program the steepest descent method (using your program from Problem~\ref{prob:ProgAlg} to find the step length).  Use your program to numerically solve this problem under two cases: i) $c=1$, ii) $c=10$.  Compare the convergence in these two cases.
 \end{subproblem}
 
+
+
+\begin{table}[t]
+  \centering
+  \caption{Parameters used for the exact line search of problem~\#6}\label{tab:p6ParamValues}
+  \begin{tabular}{|c|c|}
+    \hline
+    Parameter & Value \\\hline
+    $c_1$ & 0.1 \\\hline
+    $c_2$ & 0.9 \\\hline
+    $tol$ & $10^{-16}$ \\\hline
+    $x_0\transpose$ & $[10,10]$ \\\hline
+  \end{tabular}
+\end{table}
+
 \noindent
-Figures~\ref{fig:p6C=1} and~\ref{fig:p6C=10} show the results of exact line search with the steepest descent method for $x_0\transpose = [10, 10]$ for $c=1$ and $c=10$ respectively.  The error tolerance was set to $10^{-16}$.  Note that for $c=1$, the result converged in only 7~iterations.  In contrast for $c=10$, convergence took 1,703~iterations.
+Table~\ref{tab:p6ParamValues} lists the parameter values for this part of the problem. Figures~\ref{fig:p6C=1} and~\ref{fig:p6C=10} show the results of exact line search with the steepest descent method with for $c=1$ and $c=10$ respectively.  Note that for $c=1$, the result converged in only 7~iterations.  In contrast for $c=10$, convergence took 1,703~iterations.
 
 \input{p6_plots}
 
+\newpage 
 \begin{subproblem}
   Using Theorem 3.4, explain why as $c$ increases the convergence of the steepest descent method deteriorates.
 \end{subproblem}
+
+For a matrix $A$ with sorted eigenvalues in ascending order $\lambda_1,\ldots,\lambda_n$, the condition number is defined as:
+
+\[ \kappa(A) =\frac{\lambda_n}{\lambda_1} \text{.}\]
+
+\noindent
+In general, as $\kappa$ of the Hessian increases, the system has worse conditioning and takes more steps to converge.  For this problem $\kappa(\nabla^2 f) = c^2$.  Therefore, the convergence rates deteriorates quadratically with $c$.
