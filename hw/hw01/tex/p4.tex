@@ -10,12 +10,12 @@ In exact line search, the step size $\alpha$ is chosen such that:
 \noindent
 Therefore, taking the derivative of $f_{k+1}$ with respect to $\alpha$ yields:
 
-\[ \frac{\partial f_{k+1}}{\partial \alpha_{k}} = 0 \textrm{.} \]
+\[ \frac{\partial f_{k+1}}{\partial \alpha} = 0 \textrm{.} \]
 
 \noindent
 By the chain rule, this becomes,
 
-\[ \frac{\partial f_{k+1}}{\partial x_{k+1}} \cdot \frac{\partial x_{k+1}}{\partial \alpha_{k}} = 0 \textrm{.} \]
+\[ \frac{\partial f_{k+1}}{\partial x_{k+1}} \cdot \frac{\partial x_{k+1}}{\partial \alpha} = 0 \textrm{.} \]
 
 \noindent
 Knowing that ${x_{k+1} = x_k + \alpha_{k} p_k}$, we can rearrange the terms to prove the required statement:

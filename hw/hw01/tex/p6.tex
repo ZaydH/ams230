@@ -66,11 +66,15 @@ This matrix has eigenvalues $2c ^ 2$ and $2$.  Since $c \ne 0$ by definition, th
     $c_2$ & 0.9 \\\hline
     $tol$ & $10^{-16}$ \\\hline
     $x_0\transpose$ & $[10,10]$ \\\hline
+    $\alpha_{\max}$ & N/A \\\hline
   \end{tabular}
 \end{table}
 
 \noindent
 Table~\ref{tab:p6ParamValues} lists the parameter values for this part of the problem. Figures~\ref{fig:p6C=1} and~\ref{fig:p6C=10} show the results of exact line search with the steepest descent method with for $c=1$ and $c=10$ respectively.  Note that for $c=1$, the result converged in only 7~iterations.  In contrast for $c=10$, convergence took 1,703~iterations.
+
+\noindent
+\textbf{Note}: $\alpha_{\max}$ was not used since the doubling technique was used to find $\alpha$.
 
 \input{p6_plots}
 
