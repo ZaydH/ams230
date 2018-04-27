@@ -1,0 +1,25 @@
+\begin{problem}
+  Exercise 3.6 in Nocedal and Wright.
+  
+  Consider the steepest descent method with exact line searches applied to the convex quadratic function~(3.24). Using the properties given in this chapter, show that if the initial point is such that ${x_0 - \xopt}$ is parallel to an eigenvector of $Q$, then the steepest descent method will find the solution in one step.
+\end{problem}
+
+\noindent
+For the convex quadratic function, define $\nabla f_k = Q(x_k - \xopt)$.  Similarly define the weighted norm as ${ \wnorm{x} = x\transpose Q x}$.  Then Nocedal defines equation~(3.28) as:
+
+\[\wnorm{x_{k+1} - \xopt} = \left\{1-\frac{(\nabla\transpose f_k \nabla f_k)^{2}}{(\nabla\transpose  f_k Q \nabla f_k)(\nabla\transpose f_k Q^{-1} \nabla f_k)}\right\}\wnorm{x_k-\xopt} \text{.} \]
+
+\noindent
+Recall that for an eigenvector, $u$, of matrix $A$ it holds that $Au=\lambda u$ where $\lambda$ is the associated eigenvalue.  Similarly, for $A^{-1}$, the inverse of $A$, it holds that $A^{-1}u=\frac{1}{\lambda} u$.  Using $x_0$ as defined in the question, we get,
+
+\begin{aligncustom}
+  \wnorm{x_{1} - \xopt} &= \left\{1-\frac{(\nabla\transpose f_0 \nabla f_0)^{2}}{(\nabla\transpose  f_0 Q (Q(x_0 - \xopt)))(\nabla\transpose f_0 Q^{-1} (Q(x_0 - \xopt))}\right\}\wnorm{x_0-\xopt} \\
+  &= \left\{1-\frac{(\nabla\transpose f_0 \nabla f_0)^{2}}{(\nabla\transpose  f_0 Q \lambda (x_0 - \xopt))(\nabla\transpose f_0 Q (Q^{-1}(x_0 - \xopt))}\right\}\wnorm{x_0-\xopt}  \\
+  &= \left\{1-\frac{(\nabla\transpose f_0 \nabla f_0)^{2}}{\lambda (\nabla\transpose  f_0 Q (x_0 - \xopt))(\nabla\transpose f_0 Q \frac{1}{\lambda} (x_0 - \xopt))}\right\}\wnorm{x_0-\xopt} \\
+  &= \left\{1-\frac{(\nabla\transpose f_0 \nabla f_0)^{2}}{ (\nabla\transpose  f_0 \nabla f_0)(\nabla\transpose f_0 \nabla f_0)}\right\}\wnorm{x_0-\xopt} \\
+  &= \left\{1-1\right\}\wnorm{x_0-\xopt} = 0
+\end{aligncustom}
+
+\noindent
+Since $Q$ is positive definite, then for any non-zero vector it holds that $x\transpose Q x > 0$.  Therefore, if $\wnorm{x_{1} - \xopt} = 0$, then $x_{1} - \xopt = 0$ meaning $x_{1} = \xopt$.  Therefore, the system has converged, i.e., found the solution.
+
