@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -6,7 +8,6 @@ from typing import List
 
 class ConjugateGradient:
     def __init__(self):
-        self._n = None
         self.n = None
 
         self._x0 = None
@@ -18,7 +19,7 @@ class ConjugateGradient:
 
         self._err = None
 
-        self._tol = 10 ** -6
+        self._tol = 10 ** -15
 
     def initialize_x0(self):
         """
@@ -64,7 +65,7 @@ class ConjugateGradient:
         if self._b is not None:
             self._find_x_opt()
 
-    def run(self):
+    def run(self, title):
         """
         Perform the conjugate gradient experiment.
         """
@@ -74,34 +75,39 @@ class ConjugateGradient:
         r_k = self._A @ x_k - self._b  # type: np.ndarray
         p_k = -1 * r_k
         k = 0
+        self.update_error(x_k)
 
-        while k < self.n and np.linalg.norm(r_k) < self._tol:
-            alpha_k = np.dot(r_k, r_k) / (p_k.transpose() @ self._A @ p_k)
+        while k < self.n and np.linalg.norm(r_k, 2) > self._tol:
+            alpha_k = (r_k.transpose() @ r_k) / (p_k.transpose() @ self._A @ p_k)
+
+            x_k = x_k + alpha_k * p_k
             r_k_1 = r_k + alpha_k * self._A @ p_k
 
-            beta_k_1 = np.dot(r_k_1, r_k_1) / np.dot(r_k, r_k)
+            beta_k_1 = (r_k_1.transpose() @ r_k_1) / (r_k.transpose() @ r_k)
 
             # Increment the counter and vectors
             k = k + 1
-            x_k = x_k + alpha_k *p_k
             p_k = -r_k_1 + beta_k_1 * p_k
             r_k = r_k_1
             self.update_error(x_k)
+
+        ConjugateGradient._build_plot([i for i in range(0, len(self._err))], self._err,
+                                      x_label="Iteration", y_label="Log Error", title=title)
 
     def update_error(self, x_k: np.ndarray):
         """
         Calculate the error for x_k and update the error list.
 
-        :param x_k:
-        :return:
+        :param x_k: x-value for iteration k,
         """
-        self._err.append(self._calculate_err(x_k) - self._err_opt)
+        self._err.append(math.log10(abs(self._calculate_err(x_k) - self._err_opt)))
 
     def _calculate_err(self, x: np.ndarray) -> float:
         """
+        Calculate the error for the specified x for the convex quadratic function.
 
         :param x: X position to be passed to the error function.
-        :return:
+        :return: Error with respect to the convex quadratic function.
         """
         err = 0.5 * (x.transpose() @ self._A @ x)  # "@" symbol in Python 3.5 is matrix multiply
         err -= self._b.transpose() @ x
@@ -133,7 +139,7 @@ class ConjugateGradient:
         fig = plt.figure()
         plt.plot(x_data, y_data, linestyle="-")
 
-        plt.legend(loc="best")
+        # plt.legend(loc="best")
 
         # Optionally plot on a logarithmic axis
         if log_x:
@@ -150,7 +156,7 @@ class ConjugateGradient:
             plt.title(title)
         # Ensure a consistent x-axis even if there is insufficient y-data.
         plt.xlim(min(x_data), max(x_data))
-        plt.ylim(10 * min(y_data), 10 * max(y_data))
+        plt.ylim(-5 + min(y_data), 5 + max(y_data))
 
         # Save the figure with the plot
         # plt.show()
@@ -158,8 +164,14 @@ class ConjugateGradient:
         fig.savefig(filename + ".png")
         plt.close(fig)
 
+        # Export a CSV of the data for plotting in LaTeX
+        with open(filename + ".csv", "w") as fout:
+            fout.write("%s,%s" % (x_label, y_label))
+            for x_i, y_i in zip(x_data, y_data):
+                fout.write("\n%.16f,%0.16f" % (x_i, y_i))
 
-def run_cg(n, clusters, p=None):
+
+def run_cg(n, clusters, title, p=None):
     cg = ConjugateGradient()
     cg.n = n
 
@@ -171,12 +183,12 @@ def run_cg(n, clusters, p=None):
     else:
         cg.initialize_matrix(clusters, p)
 
-    cg.run()
+    cg.run(title)
 
 
 def main():
-    run_cg(10, [[10, 1000]])
-    run_cg(1000, [[9, 11], [999, 1001]], [.1, .9])
+    run_cg(10, [[10, 1000]], "uniform_eigen_10_1000")
+    run_cg(1000, [[9, 11], [999, 1001]], "dual_modal_eigen_cluster_10_1000", [.1, .9])
 
 
 if __name__ == "__main__":
