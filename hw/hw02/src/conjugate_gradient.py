@@ -1,9 +1,8 @@
 import math
-
 import numpy as np
-import matplotlib.pyplot as plt
-
 from typing import List
+
+from cg_utils import build_plot, setup_logger
 
 
 class ConjugateGradient:
@@ -91,8 +90,8 @@ class ConjugateGradient:
             r_k = r_k_1
             self.update_error(x_k)
 
-        ConjugateGradient._build_plot([i for i in range(0, len(self._err))], self._err,
-                                      x_label="Iteration", y_label="Log Error", title=title)
+        build_plot(list(range(0, len(self._err))), self._err, x_label="Iteration",
+                   y_label="Log Error", title=title)
 
     def update_error(self, x_k: np.ndarray):
         """
@@ -100,7 +99,10 @@ class ConjugateGradient:
 
         :param x_k: x-value for iteration k,
         """
-        self._err.append(math.log10(abs(self._calculate_err(x_k) - self._err_opt)))
+        diff = abs(self._calculate_err(x_k) - self._err_opt)
+        if diff == 0:
+            return
+        self._err.append(math.log10(diff))
 
     def _calculate_err(self, x: np.ndarray) -> float:
         """
@@ -117,58 +119,9 @@ class ConjugateGradient:
         """
         Finds the optimal value that minimizes the convex function.
         """
-        self._x_opt = np.linalg.solve(self._A, 2 * self._b)
+        self._x_opt = np.linalg.solve(self._A, self._b)
 
         self._err_opt = self._calculate_err(self._x_opt)
-
-    @staticmethod
-    def _build_plot(x_data: List, y_data: List, log_x: bool=False, log_y: bool=False,
-                    x_label: str="", y_label: str="", title: str =""):
-        """
-        Creates a MatPlotLib plot for the the test data.  It supports multiple sets of y_data
-        (stored as a list of lists).  All must share the same x-data in this implementation.
-
-        :param x_data:
-        :param y_data: List of multiple Y values for the corresponding X data
-        :param log_x: True if the X-axis should be logarithmic.
-        :param log_y: True if the Y-axis should be logarithmic.
-        :param x_label: Label to be used for the X-axis
-        :param y_label: Label to be used for the Y-axis
-        :param title: Graph title
-        """
-        fig = plt.figure()
-        plt.plot(x_data, y_data, linestyle="-")
-
-        # plt.legend(loc="best")
-
-        # Optionally plot on a logarithmic axis
-        if log_x:
-            plt.xscale('log')
-        if log_y:
-            plt.yscale('symlog')
-
-        # Configure the label and title.
-        if x_label:
-            plt.xlabel(x_label)
-        if y_label:
-            plt.ylabel(y_label)
-        if title:
-            plt.title(title)
-        # Ensure a consistent x-axis even if there is insufficient y-data.
-        plt.xlim(min(x_data), max(x_data))
-        plt.ylim(-5 + min(y_data), 5 + max(y_data))
-
-        # Save the figure with the plot
-        # plt.show()
-        filename = title.replace(" ", "_").replace(",", "").lower()
-        fig.savefig(filename + ".png")
-        plt.close(fig)
-
-        # Export a CSV of the data for plotting in LaTeX
-        with open(filename + ".csv", "w") as fout:
-            fout.write("%s,%s" % (x_label, y_label))
-            for x_i, y_i in zip(x_data, y_data):
-                fout.write("\n%.16f,%0.16f" % (x_i, y_i))
 
 
 def run_cg(n, clusters, title, p=None):
@@ -192,4 +145,5 @@ def main():
 
 
 if __name__ == "__main__":
+    setup_logger()
     main()

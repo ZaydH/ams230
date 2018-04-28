@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/p04_pr.csv}\thedata
+  \begin{axis}[
+      width=\plotDim,
+      height=\plotDim,
+      ymin=-35,
+      ymax=10,
+      xmin=0,
+      xtick distance=1,
+      xlabel={Iteration \#},
+      ylabel={$\log_{10} \textrm{Error}$},
+      title={Polak-Ribi\'{e}re},
+    ]
+    \addplot[
+      mark size=0.8pt,
+      color=blue,
+      mark=*,
+      mark options={blue,fill=blue}
+    ]
+    table[x index=0,y index=1] {\thedata};
+  \end{axis}
+\end{tikzpicture}

@@ -1,28 +1,70 @@
 \begin{problem}
-  Consider the steepest descent method with exact line searches applied to the convex quadratic function $f(x)=\frac{1}{2}x\transpose Q x - b\transpose x$, where $Q$ is symmetric and positive definite.  Show that the search direction at step $k+1$ is always orthogonal to the search direction at step~$k$, i.e.,~$p_{k}\transpose p_{k+1} = 0$ for all $k$.
+  Consider the problem of minimizing
+
+  \[f(x_{1},x_{2},\cdots,x_{n}) = \sum_{i=1}^{n-1}[100(x^{2}_{i} - x_{i+1})^{2} +(x_{i} - 1)^{2}]\textrm{.}\]
+
+  The global minimum is at $x^{∗} = [1, 1,\cdots,1]$. Numerically solve this problem using nonlinear conjugate gradient algorithms:
+  \begin{enumerate}
+    \item FR (Algorithm 5.4)
+    \item FR with restart based on (5.52)
+    \item PR based on (5.44)
+  \end{enumerate}
+
+  \noindent
+  and compare their performance. (In the numerical experiments you can set ${n = 100}$ or any number that is not too small. The initial condition can be chosen as a random vector, for example, $2∗\text{rand}(n,1)$.)
 \end{problem}
 
+As their names indicate, the three non-linear conjugate gradient methods rely on the calculation of the gradient.  The gradient of $f$ is:
+
+\[ \nabla f = \left\{
+                \begin{array}{lc}
+                  400x_i(x_{i}^{2} - x_{i+1}) + 2(x_i - 1)\text{,} & i = 1 \\
+                  400x_i(x_{i}^{2} - x_{i+1}) + 2(x_i - 1) -200(x^{2}_{i-1} - x_{i})\text{,} & 1 < i < n \\
+                  -200(x^{2}_{i-1} - x_{i})\text{,} & i = n \\
+                \end{array}
+              \right. \text{.} \]
+              
 \noindent
-In exact line search, the step size $\alpha$ is chosen such that:
+For the inexact line search, define $\psi_i = x_i + \alpha p_i$.  Therefore, the derivative of $\phi$ is
 
-\[ \alpha_k = \arg \min_{\alpha} f(x_k + \alpha p_k)\textrm{.} \]
-
-\noindent
-Therefore, taking the derivative of $f_{k+1}$ with respect to $\alpha$ yields:
-
-\[ \frac{\partial f_{k+1}}{\partial \alpha} = 0 \textrm{.} \]
+\[ \phi' =  \sum_{i=1}^{n-1} 400 p_i \psi_i (\psi_{i}^{2} - \psi_{i+1}) 
+            + 2p_i(\psi_i - 1) \text{.} \]
 
 \noindent
-By the chain rule, this becomes,
+The parameters used for this experiment are specified in Table~\ref{tab:p04:ExperimentParams}.
 
-\[ \frac{\partial f_{k+1}}{\partial x_{k+1}} \cdot \frac{\partial x_{k+1}}{\partial \alpha} = 0 \textrm{.} \]
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Parameter} & \textbf{Value} \\
+    \hline\hline
+    $n$     & 100 \\\hline
+    $x_{0}$ & $2\cdot\text{rand}(n,1)$\\\hline
+  \end{tabular}
+  \caption{Experiment parameters for problem~\#4}\label{tab:p04:ExperimentParams}
+\end{table}
 
-\noindent
-Knowing that ${x_{k+1} = x_k + \alpha_{k} p_k}$, we can rearrange the terms to prove the required statement:
+Figures~\ref{fig:p04:FR},~\ref{fig:p04:FRwithRestart}, and~\ref{fig:p04:PR} show the performance of Fletcher-Reeves, Fletcher-Reeves with Restart, and Polak-Ribi\'{e}re respectively.
 
-\begin{aligncustom}
-  \nabla\transpose f_{k+1} p_k &= 0 \\
-  p_{k+1}\transpose p_k &= 0 \\
-  p_{k}\transpose p_{k+1} &= 0\textrm{.}
-\end{aligncustom}
 
+\newpage
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.48\textwidth}
+    \input{pgfplots/p04_fr_plot}
+    \caption{}\label{fig:p04:FR}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[t]{0.48\textwidth}
+    \input{pgfplots/p04_fr_with_restart_plot}
+    \caption{}\label{fig:p04:FRwithRestart}
+  \end{subfigure}
+  \caption{Problem~\#4 performance for Fletcher-Reeves without and with restart}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \input{pgfplots/p04_pr_plot}
+  \caption{Problem~\#4 performance for the Polak-Ribi\'{e}re Method}\label{fig:p04:PR}
+\end{figure}
