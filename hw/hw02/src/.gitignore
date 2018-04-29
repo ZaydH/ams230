@@ -4,6 +4,8 @@
 *.csv
 *.png
 
+__pycache__/
+
 # Windows default autosave extension
 *.asv
 
