@@ -28,12 +28,12 @@ The Python source code for the implementation of the linear conjugate gradient m
 
 Figures~\ref{fig:p03:uniformEigenvalues} and~\ref{fig:p03:bimodalEigenvalues} show the performance of the linear conjugate gradient with $n$ uniform and $n$ bimodal eigenvalues respectively.  Similar to the results shown in Figure~5.4 of Nocedal and Wright, matrix~$A$ with uniform eigenvalues takes longer to converge.  For matrix~$A$ with bimodal eigenvalues, it took about 15~steps to fully converge.  Considering that there were approximately 10~eigenvalues from the distribution $\mathcal{U}(9,10)$, these findings align with the theoretical explanation in Nocedal and Wright.
 
-Figures~\ref{fig:p03:bimodalWeightedErr} and~\ref{fig:p03:uniformWeightedErr} show the corresponding weighted error versus the calculated upper bound for the uniform and bimodal eigenvalues respectively.  These results are based on Eq.~(5.36) which states that:
+Figures~\ref{fig:p03:uniformWeightedErr} and~\ref{fig:p03:bimodalWeightedErr} show the corresponding weighted error versus the calculated upper bound for the uniform and bimodal eigenvalues respectively.  These results are based on Eq.~(5.36) which states that:
 
-\[ \wnorm{x_k - \xopt} \leq 2\left(\frac{\sqrt{\kappa(A)}-1}{\sqrt{\kappa(A)}+1}\right)\wnorm{x_0 - \xopt} \]
+\[ \wnorm{x_k - \xopt} \leq 2\left(\frac{\sqrt{\kappa(A)}-1}{\sqrt{\kappa(A)}+1}\right)^{k}\wnorm{x_0 - \xopt} \]
 
 \noindent
-Observe that the upper bound tracks well for the uniform eigenvalues.  The upper bound is quite loose when the eigenvalues are clustered bimodally.
+where $\kappa(A)=\lambda_n / \lambda_1$. Observe that the upper bound tracks well for the uniform eigenvalues.  In contrast, the upper bound is quite loose when the eigenvalues are clustered bimodally.
 
 \newpage
 \begin{figure}[p]

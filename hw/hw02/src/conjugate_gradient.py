@@ -128,7 +128,7 @@ class ConjugateGradient:
         x0_diff = w_norm(self._x0 - self._x_opt, self._A)
         kappa_a = max(self._eigenvals) / min(self._eigenvals)
         kappa_rat = (math.sqrt(kappa_a) - 1) / (math.sqrt(kappa_a) + 1)
-        self._upper_bound = [math.log10(2 * kappa_rat ** k * x0_diff)
+        self._upper_bound = [math.log10(2 * (kappa_rat ** k) * x0_diff)
                              for k in range(len(self._weighted_err))]
 
     def _calculate_err(self, x: np.ndarray) -> float:
