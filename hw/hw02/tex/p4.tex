@@ -27,7 +27,7 @@ As their names indicate, the three non-linear conjugate gradient methods rely on
 \noindent
 For the inexact line search, define $\psi_i = x_i + \alpha p_i$.  Therefore, the derivative of $\phi$ is
 
-\[ \phi' =  \sum_{i=1}^{n-1} 400 p_i \psi_i (\psi_{i}^{2} - \psi_{i+1}) 
+\[ \phi' =  \sum_{i=1}^{n-1} 200 (2p_i \psi_i - p_{i+1}) (\psi_{i}^{2} - \psi_{i+1}) 
             + 2p_i(\psi_i - 1) \text{.} \]
 
 \noindent
@@ -35,6 +35,7 @@ The parameters used for this experiment are specified in Table~\ref{tab:p04:Expe
 
 \begin{table}[h]
   \centering
+  \caption{Experiment parameters for problem~\#4}\label{tab:p04:ExperimentParams}
   \begin{tabular}{|c|c|}
     \hline
     \textbf{Parameter} & \textbf{Value} \\
@@ -42,14 +43,15 @@ The parameters used for this experiment are specified in Table~\ref{tab:p04:Expe
     $n$     & 100 \\\hline
     $x_{0}$ & $2\cdot\text{rand}(n,1)$\\\hline
   \end{tabular}
-  \caption{Experiment parameters for problem~\#4}\label{tab:p04:ExperimentParams}
 \end{table}
 
-Figures~\ref{fig:p04:FR},~\ref{fig:p04:FRwithRestart}, and~\ref{fig:p04:PR} show the performance of Fletcher-Reeves, Fletcher-Reeves with Restart, and Polak-Ribi\'{e}re respectively.
+Figures~\ref{fig:p04:FR},~\ref{fig:p04:FRwithRestart}, and~\ref{fig:p04:PR} show the performance of Fletcher-Reeves, Fletcher-Reeves with Restart, and Polak-Ribi\`{e}re respectively. In all experiments, the same random~$x_0$ was used.  
 
+As expected, standard Fletcher-Reeves had the worst performance. Between 500 and 2,000 iterations, the algorithm made barely any progress and never came close to converging to the optimal solution.  In Fletcher-Reeves with restart, the algorithm behaves similar to without restart for many iterations.  Similar to what is explained in Nocedal, the algorithm then begins to enter a region (e.g.,~iteration 1,400) where the error decreases rapidly.  Across multiple trials with different random $x_0$, this avalanche point shifted between around 50~to over 2,000~iterations.
 
-\newpage
-\begin{figure}
+Generally, across different random~$x_0$, the Polak-Ribi\`{e}re method converged the fastest of the three methods.  It was however only marginal better than Fletcher-Reeves with restart and still exhibited the same avalanche behavior.
+
+\begin{figure}[p]
   \centering
   \begin{subfigure}[t]{0.48\textwidth}
     \input{pgfplots/p04_fr_plot}
@@ -63,8 +65,8 @@ Figures~\ref{fig:p04:FR},~\ref{fig:p04:FRwithRestart}, and~\ref{fig:p04:PR} show
   \caption{Problem~\#4 performance for Fletcher-Reeves without and with restart}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
   \centering
   \input{pgfplots/p04_pr_plot}
-  \caption{Problem~\#4 performance for the Polak-Ribi\'{e}re Method}\label{fig:p04:PR}
+  \caption{Problem~\#4 performance for the Polak-Ribi\`{e}re Method}\label{fig:p04:PR}
 \end{figure}

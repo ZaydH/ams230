@@ -1,13 +1,13 @@
 \begin{tikzpicture}
-  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/p04_pr.csv}\thedata
+  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/p03_uniform_eigen.csv}\thedata
   \begin{axis}[
       width=\plotDim,
       height=\plotDim,
       xmin=0,
-      xmax=2000,
-      minor x tick num=4,
+      xmax=105,
+      minor x tick num=1,
       ymin=-15,
-      ymax=5,
+      ymax=6,
       minor y tick num=4,
       every tick label/.append style={font=\scriptsize},  % Reduce axis font size
       xlabel={Iteration \#},
@@ -15,7 +15,7 @@
       xlabel style={font=\scriptsize},
       ylabel style={font=\scriptsize},
       ylabel shift = -8pt,
-      title={Polak-Ribi\`{e}re},
+      title={Uniform Eigenvalues},
     ]
     \addplot[
 %      mark size=0.8pt,

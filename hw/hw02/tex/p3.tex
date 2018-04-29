@@ -1,12 +1,70 @@
 \begin{problem}
   In this problem we will test the performance of linear conjugate gradient method for minimizing quadratic function $f(x) = \frac{1}{2}x\transpose Ax - b \transpose x$, where $A$ is symmetric and positive definite.
-  
+
   \begin{itemize}
     \item Program CG Algorithm~5.2 in the textbook.
-    
+
     \item Apply your program on a symmetric and positive definite matrix $A$ of dimension $10^{3} \times 10^{3}$ with eigenvalues uniformly distributed between~$10$ and~$10^3$. Test the convergence of the algorithm and compare your numerical findings with the theoretical result shown in formula (5.36) in the textbook.
-    
+
     \item Change the distribution of eigenvalues of $A$ so that some eigenvalues are distributed between 9~and~11, the rest of eigenvalues are distributed between 999 and 1001, i.e.,~two clusters around 10~and~1000 with radius~1. Test the convergence performance on such matrix. Extra points if you can explain your numerical findings using the theoretical convergence results discussed in the lecture.
   \end{itemize}
 \end{problem}
 
+The Python source code for the implementation of the linear conjugate gradient method as detailed in Algorithm~5.2 is included at the end of this submission.  The specific parameters used are enumerated in Table~\ref{tab:p03:ExperimentParams}.  Distribution $\mathcal{U}(a,b)$ indicates a uniform random variable drawn from the range $[a,b)$.  Note that for all experiments in this program problem, the same random $x_0$ vector was used to ensure consistency.
+
+\begin{table}[h]
+  \centering
+  \caption{Parameters for the linear conjugate gradient experiments of problem~\#3}
+  \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Parameter} & \textbf{Value} \\
+    \hline\hline
+    $n$ & 1,000 \\ \hline
+    $x_0$ & $2\cdot\text{rand}(n,1)$ \\ \hline
+    Uniform & $\mathcal{U}(10,1000)$ \\ \hline
+    Bimodal & 10\% from $\mathcal{U}(9,10)$ and 90\% from $\mathcal{U}(999,1001)$\\ \hline
+  \end{tabular}
+\end{table}
+
+Figures~\ref{fig:p03:uniformEigenvalues} and~\ref{fig:p03:bimodalEigenvalues} show the performance of the linear conjugate gradient with $n$ uniform and $n$ bimodal eigenvalues respectively.  Similar to the results shown in Figure~5.4 of Nocedal and Wright, matrix~$A$ with uniform eigenvalues takes longer to converge.  For matrix~$A$ with bimodal eigenvalues, it took about 15~steps to fully converge.  Considering that there were approximately 10~eigenvalues from the distribution $\mathcal{U}(9,10)$, these findings align with the theoretical explanation in Nocedal and Wright.
+
+Figures~\ref{fig:p03:bimodalWeightedErr} and~\ref{fig:p03:uniformWeightedErr} show the corresponding weighted error versus the calculated upper bound for the uniform and bimodal eigenvalues respectively.  These results are based on Eq.~(5.36) which states that:
+
+\[ \wnorm{x_k - \xopt} \leq 2\left(\frac{\sqrt{\kappa(A)}-1}{\sqrt{\kappa(A)}+1}\right)\wnorm{x_0 - \xopt} \]
+
+\noindent
+Observe that the upper bound tracks well for the uniform eigenvalues.  The upper bound is quite loose when the eigenvalues are clustered bimodally.
+
+\newpage
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \input{pgfplots/p03_uniform_eigen}
+    \caption{\scriptsize 1,000 $\lambda$ from the distribution $\mathcal{U}(10,10^{3})$}\label{fig:p03:uniformEigenvalues}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \input{pgfplots/p03_bimodal_eigen}
+    \caption{\scriptsize 1,000 $\lambda$ from distributions $\mathcal{U}(9,11)$ and $\mathcal{U}(999,1001)$ }\label{fig:p03:bimodalEigenvalues}
+  \end{subfigure}
+  \caption{Cost function $f$ for problem~\#3}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \input{pgfplots/p03_uniform_weighted_err}
+    \caption{\scriptsize Weighted error for 1,000 uniform eigenvalues}\label{fig:p03:uniformWeightedErr}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \input{pgfplots/p03_bimodal_weighted_err}
+    \caption{\scriptsize Weighted error for 1,000 bimodal eigenvalues}\label{fig:p03:bimodalWeightedErr}
+  \end{subfigure}
+  \caption{Weighted error results for problem~\#3}
+\end{figure}
+\clearpage

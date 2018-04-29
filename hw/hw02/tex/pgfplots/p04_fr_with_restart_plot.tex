@@ -3,18 +3,24 @@
   \begin{axis}[
       width=\plotDim,
       height=\plotDim,
-      ymin=-35,
-      ymax=10,
+      ymin=-15,
+      ymax=5,
+      minor y tick num=4,
       xmin=0,
-      xtick distance=1,
+      xmax=2000,
+      minor x tick num=4,
+      every tick label/.append style={font=\scriptsize},  % Reduce axis font size
       xlabel={Iteration \#},
-      ylabel={$\log_{10} \textrm{Error}$},
+      ylabel={$\log_{10} (f(x) - f(\xopt))$},
+      xlabel style={font=\scriptsize},
+      ylabel style={font=\scriptsize},
+      ylabel shift = -8pt,
       title={Fletcher-Reeves Method with Restart},
     ]
     \addplot[
-      mark size=0.8pt,
+%      mark size=0.8pt,
       color=blue,
-      mark=*,
+%      mark=*,
       mark options={blue,fill=blue}
     ]
     table[x index=0,y index=1] {\thedata};

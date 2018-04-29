@@ -30,7 +30,7 @@
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
-\DeclarePairedDelimiter{\wnorm}{\lVert}{\rVert_{Q}^{2}}
+\DeclarePairedDelimiter{\wnorm}{\lVert}{\rVert_{A}}
 
 %---------------------------------------------------%
 %     Define Distances Used for Document Margins    %
@@ -69,7 +69,7 @@
 %---------------------------------------------------%
 % Define the Environments for the Problem Inclusion %
 %---------------------------------------------------%
-\usepackage{scrextend}      
+\usepackage{scrextend}
 \newcounter{subProbCount}     % Initialize the subproblem counter
 \newcounter{problemCount}
 \setcounter{problemCount}{0}  % Reset the subproblem counter
@@ -119,7 +119,7 @@
 }
 
 
-\newcommand{\transpose}{^{\textrm{T}}}
+\newcommand{\transpose}{^{\textnormal{T}}}
 \newcommand{\plotDim}{7.5cm}
 \newcommand{\xopt}{x^{*}}
 
@@ -140,13 +140,13 @@
 
   \newpage
   \input{p1}
-  
+
   \newpage
   \input{p2}
-  
+
   \newpage
   \input{p3}
-  
+
   \newpage
   \input{p4}
 \end{document}

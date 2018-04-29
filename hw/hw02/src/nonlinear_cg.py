@@ -37,43 +37,52 @@ class NonLinearConjugate:
         self.err = None  # type: List[float]
         self._err_opt = None  # type: float
 
-        self._TOL = 10 ** -10
+        self._TOL = 5 * 10 ** -8
 
         self._alpha0 = 0
         self._c1 = 0.1
         self._c2 = 0.9
 
-    def run(self):
+    def run(self, beta_method):
         """
         Perform non-linear conjugate gradient using the specified methods for calculating
         $\beta$.
         """
-        self.err = []
+        logging.debug("Non-Linear Conjugate Gradient Beta Method -- %s" % beta_method.value)
+        if beta_method == BetaMethod.FR:
+            self.calc_beta = NonLinearConjugate.fr
+        elif beta_method == BetaMethod.FR_with_Restart:
+            self.calc_beta = NonLinearConjugate.fr_with_restart
+        elif beta_method == BetaMethod.PR:
+            self.calc_beta = NonLinearConjugate.pr
+        else:
+            raise ValueError("Unknown method for calculating beta")
 
+        self.err = []
         self._x_k = self._x0
         self.update_err()
-        grad_x = self._gradient(self._x_k)
-        self._p_k = -grad_x
+        grad_k = self._gradient(self._x_k)
+        self._p_k = -grad_k
         k = 0
 
-        while k < self.n and np.linalg.norm(grad_x, 2) > self._TOL:
+        # while k < self.n and np.linalg.norm(grad_x, 2) > self._TOL:
+        while k < self.n ** 2 and np.linalg.norm(grad_k, 2) > self._TOL:
             alpha_k = self.line_search()
             x_k_1 = self._x_k + alpha_k * self._p_k
 
             grad_k_1 = self._gradient(x_k_1)
-            grad_k = self._gradient(self._x_k)
             beta_k = self.calc_beta(grad_k_1, grad_k)
 
             # Update the terms for the next loop iteration
             self._x_k = x_k_1
             self.update_err()
 
-            self._p_k = -self._gradient(self._x_k) + beta_k * self._p_k
-
-            grad_x = self._gradient(self._x_k)
+            self._p_k = -grad_k_1 + beta_k * self._p_k
+            grad_k = grad_k_1
             k += 1
             if k % 10 == 0:
-                logging.info("Non-Linear Conjugate Gradient Running -- k=%(k)")
+                logging.debug("Non-Linear CG %s Running -- k = %d -- Err = %f"
+                              % (beta_method.value, k, self.err[-1]))
 
         logging.info("Completed Non-Linear Conjugate Gradient with k=%d" % (k-1))
 
@@ -119,6 +128,10 @@ class NonLinearConjugate:
         d_phi_al_0 = self._d_phi(self._alpha0)
         while True:
             alpha_m = (alpha_lo + alpha_hi) / 2
+            # Handle the case where floating point error is too high
+            if abs(alpha_hi - alpha_lo) < 10 ** -20:
+                return alpha_m
+
             phi_alpha = self._phi(alpha_m)
 
             if phi_alpha > phi_al_0 + self._c1 * alpha_m * d_phi_al_0 \
@@ -156,8 +169,10 @@ class NonLinearConjugate:
         :return:
         """
         x_al_p = self._x_k + alpha * self._p_k
-        return sum([400 * self._p_k[i] * x_al_p[i] * (x_al_p[i] ** 2 - x_al_p[i+1])
-                    + 2 * self._p_k[i] * (x_al_p[i] - 1) for i in range(0, self.n - 1)])
+        return sum([200 * (2 * self._p_k[i] * x_al_p[i] - self._p_k[i + 1])
+                    * (x_al_p[i] ** 2 - x_al_p[i + 1])
+                    + 2 * self._p_k[i] * (x_al_p[i] - 1)
+                    for i in range(0, self.n - 1)])
 
     def _gradient(self, x: np.ndarray) -> np.ndarray:
         """
@@ -239,12 +254,11 @@ class NonLinearConjugate:
         return beta
 
 
-def run_nonlinear_conjugate_gradient(n: int, method: BetaMethod):
+def main(n: int):
     """
-    Perform the conjugate gradient test.
+    Perform the conjugate gradient test for different methods.
 
     :param n: Dimension of the matrix.
-    :param method: Method for calculating Beta
     """
     ncg = NonLinearConjugate(n)
 
@@ -252,28 +266,10 @@ def run_nonlinear_conjugate_gradient(n: int, method: BetaMethod):
     ncg.initialize_x0()
     ncg.initialize_x_opt()
 
-    logging.debug("Non-Linear Conjugate Gradient Beta Method -- %s" % method.value)
-    if method == BetaMethod.FR:
-        ncg.calc_beta = NonLinearConjugate.fr
-    elif method == BetaMethod.FR_with_Restart:
-        ncg.calc_beta = NonLinearConjugate.fr_with_restart
-    elif method == BetaMethod.PR:
-        ncg.calc_beta = NonLinearConjugate.pr
-    else:
-        raise ValueError("Unknown method for calculating beta")
-
-    ncg.run()
-
-    build_plot(list(range(0, len(ncg.err))), ncg.err, x_label="Iteration",
-               y_label="Log Error", title=method.value)
-
-
-def main(n: int):
-    run_nonlinear_conjugate_gradient(n, BetaMethod.FR)
-
-    run_nonlinear_conjugate_gradient(n, BetaMethod.FR_with_Restart)
-
-    run_nonlinear_conjugate_gradient(n, BetaMethod.PR)
+    for beta_method in [BetaMethod.FR_with_Restart, BetaMethod.PR, BetaMethod.FR]:
+        ncg.run(beta_method)
+        build_plot(list(range(0, len(ncg.err))), ncg.err, x_label="Iteration",
+                   y_label="Log Error", title=beta_method.value)
 
 
 if __name__ == "__main__":
