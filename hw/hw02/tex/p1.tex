@@ -9,15 +9,23 @@
   where $A$ is symmetric and positive definite, then these vectors are linearly independent. (This result implies that $A$ has at most $n$ conjugate directions.)
 \end{problem}
 
-Any $n\times n$, symmetric, positive definite matrix $A$ has the property that:
-
-\[ \forall_{x,y\in \mathbb{R}^n} \left<x,y\right> = x\transpose A y \text{.} \]
-
-\noindent
-If vectors $x$ and $y$ are linearly independent, then 
-
-\[ \left<x,y\right> = x \cdot y= x\transpose y = x\transpose A y = 0\text{.} \]
-
-\noindent
-Therefore, if a set of vectors $\{p_{0},p_{1},\ldots,p_{l}\}$ satisfy the above property, then they must be linearly independent.  For matrix $A$, any set of linearly independent vectors that form the basis of its column space has cardinality $\text{rank} n$. Hence, ${l \leq n -1}$ for any $A$.
-
+\begin{proof} 
+  By contradiction.  
+  
+  Assume vectors $\{p_0,p_1,\ldots,p_l\}$ are $A$-orthogonal but are not linearly independent.  That means there is a set of non-zero constants $\{\alpha_0,\alpha_1,\ldots,\alpha_{l}\}$ such that:
+  
+  \[ \alpha_{0}p_{0} + \alpha_{1}p_{1} + \cdots +\alpha_{l}p_{l} = \vec{0} \text{.}\]
+  
+  \noindent
+  Multiply both sides by $Ap_i$ where $0\leq i \leq l$ yielding:
+  
+  \[ \alpha_{0}p_{0}\transpose Ap_{i} + \alpha_{1}p_{1}\transpose Ap_{i} + \cdots +\alpha_{l}p_{l}\transpose Ap_{i} = \vec{0}\transpose Ap_{i} \text{.}\]
+  
+  \noindent
+  Since $p_{i}$ and $p_{j}$ are $A$-orthogonal for ${i\ne j}$, this simplifies to:
+  
+  \[ \alpha_{i}p_{i}\transpose Ap_{i} = 0 \text{.}\]
+  
+  \noindent 
+  This is a contradiction since ${\alpha_i \ne 0}$ and $A$ is symmetric, positive definite, i.e.,~${x\transpose A x > 0}$ for all non-zero~$x$.
+\end{proof}

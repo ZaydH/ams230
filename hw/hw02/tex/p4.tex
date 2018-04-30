@@ -3,7 +3,7 @@
 
   \[f(x_{1},x_{2},\cdots,x_{n}) = \sum_{i=1}^{n-1}[100(x^{2}_{i} - x_{i+1})^{2} +(x_{i} - 1)^{2}]\textrm{.}\]
 
-  The global minimum is at $x^{∗} = [1, 1,\cdots,1]$. Numerically solve this problem using nonlinear conjugate gradient algorithms:
+  The global minimum is at $x^{∗} = [1, 1,\cdots,1]\transpose$. Numerically solve this problem using nonlinear conjugate gradient algorithms:
   \begin{enumerate}
     \item FR (Algorithm 5.4)
     \item FR with restart based on (5.52)
@@ -14,7 +14,7 @@
   and compare their performance. (In the numerical experiments you can set ${n = 100}$ or any number that is not too small. The initial condition can be chosen as a random vector, for example, $2∗\text{rand}(n,1)$.)
 \end{problem}
 
-As their names indicate, the three non-linear conjugate gradient methods rely on the calculation of the gradient.  The gradient of $f$ is:
+The gradient of $f$ is:
 
 \[ \nabla f = \left\{
                 \begin{array}{lc}
@@ -25,7 +25,7 @@ As their names indicate, the three non-linear conjugate gradient methods rely on
               \right. \text{.} \]
               
 \noindent
-For the inexact line search, define $\psi_i = x_i + \alpha p_i$.  Therefore, the derivative of $\phi$ is
+Define $\psi_i = x_i + \alpha p_i$.  Therefore, the derivative of $\phi$ is
 
 \[ \phi' =  \sum_{i=1}^{n-1} 200 (2p_i \psi_i - p_{i+1}) (\psi_{i}^{2} - \psi_{i+1}) 
             + 2p_i(\psi_i - 1) \text{.} \]
@@ -41,15 +41,19 @@ The parameters used for this experiment are specified in Table~\ref{tab:p04:Expe
     \textbf{Parameter} & \textbf{Value} \\
     \hline\hline
     $n$     & 100 \\\hline
+    $c_1$   & 0.1 \\\hline
+    $c_2$   & 0.9 \\\hline
+    $v$     & 0.1 \\\hline
     $x_{0}$ & $2\cdot\text{rand}(n,1)$\\\hline
   \end{tabular}
 \end{table}
 
-Figures~\ref{fig:p04:FR},~\ref{fig:p04:FRwithRestart}, and~\ref{fig:p04:PR} show the performance of Fletcher-Reeves, Fletcher-Reeves with Restart, and Polak-Ribi\`{e}re respectively. In all experiments, the same random~$x_0$ was used.  
+\noindent
+To calculate $\alpha_{k}$, I reused most of my implementation of inexact line search from homework~\#1.
 
-As expected, standard Fletcher-Reeves had the worst performance. Between 500 and 2,000 iterations, the algorithm made barely any progress and never came close to converging to the optimal solution.  In Fletcher-Reeves with restart, the algorithm behaves similar to without restart for many iterations.  Similar to what is explained in Nocedal, the algorithm then begins to enter a region (e.g.,~iteration 1,400) where the error decreases rapidly.  Across multiple trials with different random $x_0$, this avalanche point shifted between around 50~to over 2,000~iterations.
+Figures~\ref{fig:p04:FR},~\ref{fig:p04:FRwithRestart}, and~\ref{fig:p04:PR} show the performance of Fletcher-Reeves, Fletcher-Reeves with Restart, and Polak-Ribi\`{e}re respectively. In all experiments, the same random~$x_0$ was used to ensure consistency.  As expected, standard Fletcher-Reeves had the worst performance. Between 500 and 2,000 iterations, the algorithm made barely any progress and never came close to converging to the optimal solution.  In Fletcher-Reeves with restart, the algorithm behaves similar to Fletcher-Reeves without restart for \textasciitilde1,400 iterations.  Similar to what is explained in Nocedal and Wright, the algorithm then enters a region where the error decreases rapidly.  Across multiple trials with different random $x_0$, this avalanche point shifted anywhere within the range of 50~to over 2,000~iterations.
 
-Generally, across different random~$x_0$, the Polak-Ribi\`{e}re method converged the fastest of the three methods.  It was however only marginal better than Fletcher-Reeves with restart and still exhibited the same avalanche behavior.
+Generally, across different random~$x_0$, the Polak-Ribi\`{e}re method converged the fastest.  It was however only marginal better than Fletcher-Reeves with restart and exhibited the same avalanche behavior.
 
 \begin{figure}[p]
   \centering

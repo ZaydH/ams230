@@ -17,18 +17,9 @@ Below is the extension of Eq.~(5.24d) to Eq.~(5.14d) using the equations and the
 \begin{proof}
   \begin{alignat*}{2}
     \beta_{k+1} &= \frac{r_{k+1}\transpose r_{k+1}}{r_{k}\transpose r_{k}} &\quad &\text{Nocedal \& Wright~(5.24d)} \\
-    &= \frac{r_{k+1}\transpose r_{k+1}}{\alpha_{k}p\transpose_{k}Ap_{k}} &\quad &\text{Nocedal \& Wright~(5.24a)} \\
-    &= \frac{r_{k+1}\transpose \left(r_{k} + \alpha_{k}p_{k}\right)}{\alpha_{k}p\transpose_{k}Ap_{k}} &\quad &\text{Nocedal \& Wright~(5.24c)} \\
-    &= \frac{r_{k+1}\transpose \alpha_{k}Ap_{k}}{\alpha_{k}p\transpose_{k}Ap_{k}} &\quad &\text{Theorem~5.3 Eq.~(5.16)} \\
-    &=\boxed{\frac{r\transpose_{k+1}Ap_{k}}{p\transpose_{k}Ap_{k}}} &\quad &\text{}
+    &= \frac{r_{k+1}\transpose r_{k+1}}{\alpha_{k}p\transpose_{k}Ap_{k}} &\quad &\text{By Nocedal \& Wright~(5.24a)} \\
+    &= \frac{r_{k+1}\transpose \left(r_{k} + \alpha_{k}p_{k}\right)}{\alpha_{k}p\transpose_{k}Ap_{k}} &\quad &\text{By Nocedal \& Wright~(5.24c)} \\
+    &= \frac{r_{k+1}\transpose \alpha_{k}Ap_{k}}{\alpha_{k}p\transpose_{k}Ap_{k}} &\quad &\text{By Theorem~5.3 Eq.~(5.16)} \\
+    &=\boxed{\frac{r\transpose_{k+1}Ap_{k}}{p\transpose_{k}Ap_{k}}} &\quad &\text{Cancelling } \alpha_{k}
   \end{alignat*}
 \end{proof}
-%Eq.~(5.24a) specifies $\alpha_k$ as:
-%
-%\[\alpha_{k} = \frac{r\transpose_{k}r_{k}}{p\transpose_{k}Ap_{k}} \text{.} \]
-%
-%Substituting into Eq.~(5.24d), it equals:
-%
-%\[ \beta_{k+1} =  \]
-%
-%By Eq.~
