@@ -1,11 +1,23 @@
 \begin{problem}
   Exercise 5.2 in Nocedal and Wright.
 
-  Show that if the nonzero vectors $p_0,p_1,\ldots,p_l$ satisfy
+  Show that if the nonzero vectors $p_0,p_1,\ldots,p_l$ satisfy Eq.~(5.5) from Nocedal and Wright that
   
   \[p_i\transpose A p_{j} = 0, \textnormal{ for all } i \ne j\text{,}\]
   
   \noindent
   where $A$ is symmetric and positive definite, then these vectors are linearly independent. (This result implies that $A$ has at most $n$ conjugate directions.)
 \end{problem}
+
+Any $n\times n$, symmetric, positive definite matrix $A$ has the property that:
+
+\[ \forall_{x,y\in \mathbb{R}^n} \left<x,y\right> = x\transpose A y \text{.} \]
+
+\noindent
+If vectors $x$ and $y$ are linearly independent, then 
+
+\[ \left<x,y\right> = x \cdot y= x\transpose y = x\transpose A y = 0\text{.} \]
+
+\noindent
+Therefore, if a set of vectors $\{p_{0},p_{1},\ldots,p_{l}\}$ satisfy the above property, then they must be linearly independent.  For matrix $A$, any set of linearly independent vectors that form the basis of its column space has cardinality $\text{rank} n$. Hence, ${l \leq n -1}$ for any $A$.
 
