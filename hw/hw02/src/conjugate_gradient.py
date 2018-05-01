@@ -124,7 +124,7 @@ class ConjugateGradient:
         and Wright.
         """
         self._upper_bound = []
-        # Upper bound for thhe error in Nocedal and Wright (5.36)
+        # Upper bound for the error in Nocedal and Wright (5.36)
         x0_diff = w_norm(self._x0 - self._x_opt, self._A)
         kappa_a = max(self._eigenvals) / min(self._eigenvals)
         kappa_rat = (math.sqrt(kappa_a) - 1) / (math.sqrt(kappa_a) + 1)

@@ -12,12 +12,12 @@
 \begin{proof} 
   By contradiction.  
   
-  Assume vectors $\{p_0,p_1,\ldots,p_l\}$ are $A$-orthogonal but are not linearly independent.  That means there is a set of non-zero constants $\{\alpha_0,\alpha_1,\ldots,\alpha_{l}\}$ such that:
+  Assume vectors $\{p_0,p_1,\ldots,p_l\}$ are $A$-orthogonal but are not linearly independent.  That means there is a set constants $\{\alpha_0,\alpha_1,\ldots,\alpha_{l}\}$ not all equal to zero such that:
   
   \[ \alpha_{0}p_{0} + \alpha_{1}p_{1} + \cdots +\alpha_{l}p_{l} = \vec{0} \text{.}\]
   
   \noindent
-  Multiply both sides by $Ap_i$ where $0\leq i \leq l$ yielding:
+  For some $0\leq i \leq l$ where $\alpha_i> 0$, multiply both sides by $Ap_i$ yielding:
   
   \[ \alpha_{0}p_{0}\transpose Ap_{i} + \alpha_{1}p_{1}\transpose Ap_{i} + \cdots +\alpha_{l}p_{l}\transpose Ap_{i} = \vec{0}\transpose Ap_{i} \text{.}\]
   
