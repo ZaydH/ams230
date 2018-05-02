@@ -27,7 +27,7 @@ The Python implementation of the linear conjugate gradient method as detailed in
   \end{tabular}
 \end{table}
 
-Figures~\ref{fig:p03:uniformEigenvalues} and~\ref{fig:p03:bimodalEigenvalues} show the performance of the linear conjugate gradient method with $n$~uniform and $n$~bimodal eigenvalues respectively.  For matrix~$A$ with bimodal eigenvalues, it took about 15~steps to fully converge. Similar to the results shown in Figure~5.4 of Nocedal and Wright, matrix~$A$ with uniform eigenvalues takes longer to converge. 
+Figures~\ref{fig:p03:uniformEigenvalues} and~\ref{fig:p03:bimodalEigenvalues} show the performance of the linear conjugate gradient method with $n$~uniform and $n$~bimodal eigenvalues respectively.  For matrix~$A$ with bimodal eigenvalues, it took about 15~steps to fully converge.  When the eigenvalues were uniform, CG took longer to converge.  These results align with the examples presented in class.  In the bimodal cases, there are essentially two ``clusters'' of eigenvalues as opposed to the uniform case where the eigenvalues have significantly more spread.
 
 Figures~\ref{fig:p03:uniformWeightedErr} and~\ref{fig:p03:bimodalWeightedErr} show the corresponding $A$-weighted error versus the calculated upper bound for the uniform and bimodal eigenvalues respectively.  These results use Nocedal and Wright Eq.~(5.36) which states that:
 

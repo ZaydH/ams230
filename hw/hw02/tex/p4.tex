@@ -40,10 +40,10 @@ The parameters used for this experiment are specified in Table~\ref{tab:p04:Expe
     \hline
     \textbf{Parameter} & \textbf{Value} \\
     \hline\hline
-    $n$     & 100 \\\hline
-    $c_1$   & 0.1 \\\hline
-    $c_2$   & 0.9 \\\hline
-    $v$     & 0.1 \\\hline
+    $n$     & 100  \\\hline
+    $c_1$   & 0.1  \\\hline
+    $c_2$   & 0.45 \\\hline
+    $v$     & 0.1  \\\hline
     $x_{0}$ & $2\cdot\text{rand}(n,1)$\\\hline
   \end{tabular}
 \end{table}
@@ -58,11 +58,13 @@ Generally, across different random~$x_0$, the Polak-Ribi\`{e}re method converged
 \begin{figure}[p]
   \centering
   \begin{subfigure}[t]{0.48\textwidth}
+    \centering
     \input{pgfplots/p04_fr_plot}
     \caption{}\label{fig:p04:FR}
   \end{subfigure}
   ~
   \begin{subfigure}[t]{0.48\textwidth}
+    \centering
     \input{pgfplots/p04_fr_with_restart_plot}
     \caption{}\label{fig:p04:FRwithRestart}
   \end{subfigure}

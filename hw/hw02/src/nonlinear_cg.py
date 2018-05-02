@@ -41,7 +41,7 @@ class NonLinearConjugate:
 
         self._alpha0 = 0
         self._c1 = 0.1
-        self._c2 = 0.9
+        self._c2 = 0.45
 
     def run(self, beta_method):
         """
@@ -128,9 +128,9 @@ class NonLinearConjugate:
         d_phi_al_0 = self._d_phi(self._alpha0)
         while True:
             alpha_m = (alpha_lo + alpha_hi) / 2
-            # Handle the case where floating point error is too high
-            if abs(alpha_hi - alpha_lo) < 10 ** -20:
-                return alpha_m
+            # # Handle the case where floating point error is too high
+            # if abs(alpha_hi - alpha_lo) < 10 ** -20:
+            #     return alpha_m
 
             phi_alpha = self._phi(alpha_m)
 
