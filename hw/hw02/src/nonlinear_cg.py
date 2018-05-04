@@ -128,9 +128,9 @@ class NonLinearConjugate:
         d_phi_al_0 = self._d_phi(self._alpha0)
         while True:
             alpha_m = (alpha_lo + alpha_hi) / 2
-            # # Handle the case where floating point error is too high
-            # if abs(alpha_hi - alpha_lo) < 10 ** -20:
-            #     return alpha_m
+            # Handle the case where floating point error is too high
+            if alpha_hi == alpha_lo:
+                return alpha_m
 
             phi_alpha = self._phi(alpha_m)
 
@@ -237,7 +237,7 @@ class NonLinearConjugate:
         :param grad_k: Gradient value at x_{k}
         :return: Beta^{FR}_{k+1}
         """
-        if np.abs(grad_k_1.transpose() @ grad_k) / np.linalg.norm(grad_k, 2) >= 0.1:
+        if np.abs(grad_k_1.transpose() @ grad_k) / (grad_k_1.transpose() @ grad_k_1) >= 0.1:
             return 0
         return NonLinearConjugate.fr(grad_k_1, grad_k)
 
@@ -250,7 +250,7 @@ class NonLinearConjugate:
         :param grad_k: Gradient value at x_{k}
         :return: Beta^{PR}_{k+1}
         """
-        beta = (grad_k_1.transpose() @ (grad_k_1 - grad_k)) / (np.linalg.norm(grad_k, 2) ** 2)
+        beta = (grad_k_1.transpose() @ (grad_k_1 - grad_k)) / (grad_k.transpose() @ grad_k)
         return beta
 
 
@@ -266,7 +266,7 @@ def main(n: int):
     ncg.initialize_x0()
     ncg.initialize_x_opt()
 
-    for beta_method in [BetaMethod.FR_with_Restart, BetaMethod.PR, BetaMethod.FR]:
+    for beta_method in [BetaMethod.PR, BetaMethod.FR_with_Restart, BetaMethod.FR]:
         ncg.run(beta_method)
         build_plot(list(range(0, len(ncg.err))), ncg.err, x_label="Iteration",
                    y_label="Log Error", title=beta_method.value)

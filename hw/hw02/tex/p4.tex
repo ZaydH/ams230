@@ -6,12 +6,12 @@
   The global minimum is at $x^{∗} = [1, 1,\cdots,1]\transpose$. Numerically solve this problem using nonlinear conjugate gradient algorithms:
   \begin{enumerate}
     \item FR (Algorithm 5.4)
-    \item FR with restart based on (5.52)
-    \item PR based on (5.44)
+    \item FR with restart based on Eq.~(5.52) in Nocedal and Wright
+    \item PR based on Eq.~(5.44) in Nocedal and Wright
   \end{enumerate}
 
   \noindent
-  and compare their performance. (In the numerical experiments you can set ${n = 100}$ or any number that is not too small. The initial condition can be chosen as a random vector, for example, $2∗\text{rand}(n,1)$.)
+  and compare their performance. (In the numerical experiments you can set ${n = 100}$ or any number that is not too small. The initial condition can be chosen as a random vector, for example, $2 \cdot \text{rand}(n,1)$.)
 \end{problem}
 
 The gradient of $f$ is:
@@ -23,12 +23,12 @@ The gradient of $f$ is:
                   -200(x^{2}_{i-1} - x_{i})\text{,} & i = n \\
                 \end{array}
               \right. \text{.} \]
-              
+
 \noindent
 Define $\psi_i = x_i + \alpha p_i$.  Therefore, the derivative of $\phi$ is
 
-\[ \phi' =  \sum_{i=1}^{n-1} 200 (2p_i \psi_i - p_{i+1}) (\psi_{i}^{2} - \psi_{i+1}) 
-            + 2p_i(\psi_i - 1) \text{.} \]
+\[ \phi'(\alpha) = \sum_{i=1}^{n-1} 200 (2p_i \psi_i - p_{i+1}) (\psi_{i}^{2} - \psi_{i+1})
+                   + 2p_i(\psi_i - 1) \text{.} \]
 
 \noindent
 The parameters used for this experiment are specified in Table~\ref{tab:p04:ExperimentParams}.
@@ -49,12 +49,11 @@ The parameters used for this experiment are specified in Table~\ref{tab:p04:Expe
 \end{table}
 
 \noindent
-To calculate $\alpha_{k}$, I reused most of my implementation of inexact line search from homework~\#1.
+To calculate $\alpha$, I reused most of my implementation of inexact line search from homework~\#1.
 
-Figures~\ref{fig:p04:FR},~\ref{fig:p04:FRwithRestart}, and~\ref{fig:p04:PR} show the performance of Fletcher-Reeves, Fletcher-Reeves with Restart, and Polak-Ribi\`{e}re respectively. In all experiments, the same random~$x_0$ was used to ensure consistency.  As expected, standard Fletcher-Reeves had the worst performance. Between 500 and 2,000 iterations, the algorithm made barely any progress and never came close to converging to the optimal solution.  In Fletcher-Reeves with restart, the algorithm behaves similar to Fletcher-Reeves without restart for \textasciitilde1,400 iterations.  Similar to what is explained in Nocedal and Wright, the algorithm then enters a region where the error decreases rapidly.  Across multiple trials with different random $x_0$, this avalanche point shifted anywhere within the range of 50~to over 2,000~iterations.
+Figures~\ref{fig:p04:FR},~\ref{fig:p04:FRwithRestart}, and~\ref{fig:p04:PR} show the performance of Fletcher-Reeves, Fletcher-Reeves with Restart, and Polak-Ribi\`{e}re respectively. In all experiments, the same random~$x_0$ was used to ensure consistency.  As expected, standard Fletcher-Reeves had the worst performance. While it slowly makes progress, even after 10,000~iterations standard Fletcher-Reeves did not come close to converging to the optimal solution.  Adding restart to Fletcher-Reeves improves the performance significantly, and the algorithm converged in about 900~iterations.  Polak-Ribi\`{e}re converged the fastest in approximately 375~iterations.
 
-Generally, across different random~$x_0$, the Polak-Ribi\`{e}re method converged the fastest.  It was however only marginal better than Fletcher-Reeves with restart and exhibited the same avalanche behavior.
-
+It is important to note that different random $x_0$ could drastically effect the number of iterations it took all the algorithms to converged.  In some rare cases, a different random start position caused Fletcher-Reeves with restart to converge the fastest.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[t]{0.48\textwidth}
