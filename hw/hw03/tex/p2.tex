@@ -1,4 +1,4 @@
-\begin{problem}
+\begin{problem}\label{prob:02}
   Code Algorithm~4.1 in Nocedal and Wrihght with:
   
   \begin{enumerate}
@@ -18,4 +18,19 @@
 
 The gradient,~$g$, of $f$ is defined as: 
 
-\[g = f'(x) = \frac{2Qx}{1+x\transpose Q x}\]
+\[g = f'(x) = \frac{2Qx}{1+x\transpose Q x}\text{.}\]
+
+Table~\ref{tab:p02:experimentParameters} defines the parameters used in the experiments.  Note that $\mathcal{U}(a,b)$ represents a uniform random variable selected from the range $(a,b]$.
+
+\begin{table}[h]
+  \caption{Parameters used in the experiments for Exercise~\#\ref{prob:02}}\label{tab:p02:experimentParameters}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Name} & \textbf{Value} \\\hline
+    \hline
+    $n$       &   100\\\hline
+    $\lambda$ &   $\mathcal{U}(10,1000)$ \\\hline
+    $x_0$     &   Random vector from $\{\mathcal{U}(0,1)\}^{n}$\\\hline
+  \end{tabular}
+\end{table}

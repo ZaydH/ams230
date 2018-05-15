@@ -16,6 +16,9 @@ class TrustRegion:
         self._Q = TrustRegion.build_symmetric_pos_definite(n)
         self._x = None  # type: np.ndarray
 
+        # Initialize to a random vector for {U(0,1)}^n
+        self._x0 = np.random.uniform(0, 1, (n, 1))
+
     @staticmethod
     def build_symmetric_pos_definite(n: int) -> np.ndarray:
         """
@@ -58,6 +61,7 @@ def parse_args() -> argparse.Namespace:
     args = argparse.ArgumentParser()
     args.add_argument("n", "Dimension of matrix Q", type=int)
     return args.parse_args()
+
 
 if __name__ == "__main__":
     _args = parse_args()
