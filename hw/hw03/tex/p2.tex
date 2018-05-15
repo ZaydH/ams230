@@ -1,0 +1,21 @@
+\begin{problem}
+  Code Algorithm~4.1 in Nocedal and Wrihght with:
+  
+  \begin{enumerate}
+    \item Cauchy point method for the subproblem
+    \item Dog-leg method based on the results for Exercise~\ref{prob:01}.
+  \end{enumerate}
+
+  \noindent
+  Test and compare the performance of the methods on the following problem:
+  
+  \[\min_{x\in \mathbb{R}^n} f(x) = \log\left(1+xQx\transpose\right)\]
+  
+  \noindent
+  where $Q$ is symmetric and positive definite matrix.
+\end{problem}
+
+
+The gradient,~$g$, of $f$ is defined as: 
+
+\[g = f'(x) = \frac{2Qx}{1+x\transpose Q x}\]

@@ -1,0 +1,76 @@
+\begin{problem}\label{prob:01}
+  Consider the dog-leg path:
+  
+  \[
+    \tilde{p}(\tau) = \left\{
+                        \begin{array}{cl}
+                          \tau p^{U}, & 0\leq \tau \leq 1\\
+                          p^{U} + (\tau - 1)(p^{B} - p^{U}), & 1 \leq \tau \leq 2
+                        \end{array}
+                      \right.
+  \]
+  
+  \noindent
+  where 
+  
+  \begin{aligncustom}
+    p^{U} &= -\frac{\norm{g}^2}{g\transpose B g} g\\
+    B \cdot p^{B} &= -g \text{.}
+  \end{aligncustom}
+
+  \noindent
+  Support that symmetric matrix $B$ and vector $g$ satisfy:
+  
+  \begin{enumerate}
+    \item $g\transpose B g > 0$
+    \item $\left(p^{U}\right)\transpose \left(p^{B} - p^{U}\right) > 0$
+  \end{enumerate}
+
+  \noindent
+  Prove that:
+
+  \begin{enumerate}[i.]
+    \item\label{item:p01:prop1} $\norm{\tilde{p}(\tau)}$ is an increasing function of $\tau$
+    \item\label{item:p01:prop2} $m(\tilde{p}(\tau))$ is a decreasing function of $\tau$
+  \end{enumerate}
+
+  \noindent
+  where $m(p) = g\transpose p + \frac{1}{2}p\transpose B p$.
+\end{problem}
+
+\begin{proof}
+  Based off Lemma~4.2 from Nocedal and Wright.  There are two cases based on the value of $\tau$.
+  
+  \noindent
+  \textit{Case~\#1}: $0 \leq \tau \leq 1$
+  
+  \noindent
+  Property~\ref{item:p01:prop1}: $\norm{\tilde{p}(\tau)} = \tau \norm{p^U}$.  This is clearly increasing for $\tau \in [0,1]$ since $\norm{p^U}$ is strictly positive.
+  
+  \noindent
+  Property~\ref{item:p01:prop2}: This can be simplified via:
+  
+  \begin{aligncustom}
+    m(\tilde{p}(\tau)) &= \tau g\transpose p^{U} + \frac{\tau^{2}}{2} \left(p^{U}\right)\transpose B p^{U} \\
+                       &= -\tau \frac{\left(\norm{g}^2\right)^{2}}{g\transpose B g} + \frac{\tau^{2}}{2}\frac{\left(\norm{g}^2\right)^{2}}{g\transpose B g}  \\
+                       &= \left(-\tau + \frac{\tau^2}{2}\right)\frac{\left(\norm{g}^2\right)^{2}}{g\transpose B g}
+  \end{aligncustom}
+
+  \noindent
+  Both $\norm{g}^{2}$ and $g\transpose B g$ are strictly positive.  For $\tau \in [0,1]$, $-\tau + \tau^2/2$ is strictly decreasing.
+  
+  \noindent
+  \textit{Case~\#2}: $1 \leq \tau \leq 2$\\
+  
+  \noindent
+  Property~\ref{item:p01:prop1}: Define $h(\alpha)$ as:
+  
+  \begin{aligncustom}
+    h(\alpha) &= \frac{1}{2}\norm{\tilde{p}(1+\alpha)}^2\\
+              &= \frac{1}{2} \norm{p^{U} +\alpha(p^{B}-p^{U})} \\
+              &= \frac{1}{2}\norm{p^U}^2 + \alpha\left(p^{U}\right)\transpose(p^{B}-p^{U}) + \frac{1}{2}\alpha^2\norm{p^{B}-p^{U}}^2
+  \end{aligncustom}
+
+  \noindent
+  Property~\ref{item:p01:prop2}: Define  $\hat{h}(\alpha)=m(\tilde{p}(1+\alpha))$.  If $h'(\alpha) \leq 0$ for $\alpha \in (0,1)$ then the property holds.
+\end{proof}

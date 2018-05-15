@@ -1,0 +1,163 @@
+\documentclass{report}
+
+
+\newcommand{\name}{Zayd Hammoudeh}
+\newcommand{\course}{AMS230}
+\newcommand{\assnName}{Homework~\#3}
+
+\usepackage{fullpage}
+\usepackage[skip=4pt]{caption}      % ``skip'' sets the spacing between the figure and the caption.
+\usepackage{tikz}
+\usepackage{pgfplots}     % Needed for plotting
+\pgfplotsset{compat=newest}
+\usepackage{subcaption}
+
+\usepackage{amsmath}      % Allows for piecewise functions using the ``cases'' construct
+\usepackage{amsthm}
+\usepackage{siunitx}      % Allows for ``S'' alignment in table to align by decimal point
+%\usepackage{enumitem}     % Reference enumerated item lists.
+\usepackage{enumerate}
+
+\usepackage[obeyspaces,spaces]{url} % Used for typesetting with the ``path'' command
+\usepackage[hidelinks]{hyperref}    % Make the cross references clickable hyperlinks
+\usepackage[bottom]{footmisc}       % Prevents the table going below the footnote
+\usepackage{nccmath}      % Needed in the workaround for the ``aligncustom'' environment
+\usepackage{amssymb}      % Used for black QED symbol
+\usepackage{bm}           % Allows for bolding math symbols.
+\usepackage{tabto}        % Allows to tab to certain point on a line
+\usepackage{float}
+
+\usepackage{mathtools} % for "\DeclarePairedDelimiter" macro
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\wnorm}{\lVert}{\rVert_{A}}
+
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\blue}[1]{{\color{blue} #1}}
+
+%---------------------------------------------------%
+%     Define Distances Used for Document Margins    %
+%---------------------------------------------------%
+\newcommand{\hangindentdistance}{1cm}
+\newcommand{\defaultleftmargin}{0.25in}
+\newcommand{\questionleftmargin}{-.5in}
+%\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\setlength{\oddsidemargin}{\defaultleftmargin}
+
+
+
+
+%---------------------------------------------------%
+%      Configure the Document Header and Footer     %
+%---------------------------------------------------%
+% Set up page formatting
+\usepackage{todonotes}
+\usepackage{fancyhdr}       % Used for every page footer and title.
+\pagestyle{fancy}
+\fancyhf{}                  % Clears both the header and footer
+\renewcommand{\headrulewidth}{0pt}    % Eliminates line at the top of the page.
+\fancyfoot[LO]{\course\ -- \assnName}  % Left
+\fancyfoot[CO]{\thepage}    % Center
+\fancyfoot[RO]{\name}       %Right
+
+
+%---------------------------------------------------%
+%           Define the Title Page Entries           %
+%---------------------------------------------------%
+\title{\textbf{\course\ -- \assnName}}
+\author{\name}
+
+
+%---------------------------------------------------%
+% Define the Environments for the Problem Inclusion %
+%---------------------------------------------------%
+\usepackage{scrextend}
+\newcounter{problemCount}
+\setcounter{problemCount}{0}  % Reset the subproblem counter
+
+\newcounter{subProbCount}[problemCount]   % Reset subProbCount any time problemCount changes.
+\renewcommand{\thesubProbCount}{\alph{subProbCount}}  % Make it so the counter is referenced as a number
+
+
+\newenvironment{problemshell}{
+  \begin{addmargin}[\questionleftmargin]{0em}
+    \par%
+    \medskip
+    \leftskip=0pt\rightskip=0pt%
+    \setlength{\parindent}{0pt}
+    \bfseries
+  }
+  {
+    \par\medskip
+  \end{addmargin}
+}
+\newenvironment{problem}
+{%
+  \refstepcounter{problemCount} % Increment the subproblem counter.  This must be before the exercise to ensure proper numbering of claims and lemmas.
+  \begin{problemshell}
+    \noindent \textit{Exercise~\#\arabic{problemCount}} \\
+  }
+  {
+  \end{problemshell}
+  %  \setcounter{subProbCount}{0} % Reset the subproblem counter
+}
+\newenvironment{subproblem}
+{%
+  \begin{problemshell}
+    \refstepcounter{subProbCount} % Increment the subproblem counter
+    \setlength{\leftskip}{\hangindentdistance}
+    % Print the subproblem count and offset to the left
+    \hspace{-\hangindentdistance}(\alph{subProbCount}) \tabto{0pt}
+  }
+  {
+  \end{problemshell}
+}
+
+%---------------------------------------------------%
+%             Change Interline Spacing              %
+%---------------------------------------------------%
+
+\renewcommand{\baselinestretch}{1.1}
+\newenvironment{aligncustom}
+{ \csname align*\endcsname % Need to do this instead of \begin{align*} because of LaTeX bug.
+  \centering
+}
+{
+  \csname endalign*\endcsname
+}
+
+
+%---------------------------------------------------%
+%            Homework Specific Commands             %
+%---------------------------------------------------%
+
+\newcommand{\transpose}{^{\textnormal{T}}}
+\newcommand{\plotDim}{8cm}
+\newcommand{\xopt}{x^{*}}
+
+
+\begin{document}
+  \maketitle
+
+  \noindent
+  \textbf{Name}: Zayd Hammoudeh \\
+  \textbf{Course Name}: \course \\
+  \textbf{Assignment Name}: \assnName \\
+  \textbf{Due Date}: May 16, 2018 \\
+  \textbf{Student Discussions}: I discussed the problems with the following students.  All write-ups were prepared separately and independently. \\
+  \vspace{-2.5em}
+  \begin{itemize}
+    \item Ben Sherman
+    \item Bernardo Torres
+  \end{itemize}
+
+  \newpage
+  \input{p1}
+
+  \newpage
+  \input{p2}
+\end{document}
+
