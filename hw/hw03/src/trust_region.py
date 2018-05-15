@@ -49,7 +49,7 @@ class TrustRegion:
         Calculates the gradient of $f$
         :return: Vector for the gradient of $f$
         """
-        return 2 * (self._Q @self._x) / (1 + self._x.transpose() @ self._Q @ self._x)
+        return 2 * (self._Q @ self._x) / (1 + self._x.transpose() @ self._Q @ self._x)
 
 
 def parse_args() -> argparse.Namespace:

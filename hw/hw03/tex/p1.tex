@@ -63,7 +63,7 @@
   \textit{Case~\#2}: $1 \leq \tau \leq 2$\\
   
   \noindent
-  Property~\ref{item:p01:prop1}: Define $h(\alpha)$ as:
+  Property~\ref{item:p01:prop1}: Define $h(\alpha)$ where $\alpha \in (0,1)$ as:
   
   \begin{aligncustom}
     h(\alpha) &= \frac{1}{2}\norm{\tilde{p}(1+\alpha)}^2\\
@@ -72,5 +72,28 @@
   \end{aligncustom}
 
   \noindent
-  Property~\ref{item:p01:prop2}: Define  $\hat{h}(\alpha)=m(\tilde{p}(1+\alpha))$.  If $h'(\alpha) \leq 0$ for $\alpha \in (0,1)$ then the property holds.
+  To prove the property, it is sufficient to show that $h'(\alpha) \geq 0$ for $\alpha \in (0,1)$.  Therefore,
+  
+  \begin{aligncustom}
+    h'(\alpha)  &= -\left(p^{U}\right)\transpose \left(p^{U} - p^{B} \right) + \alpha\norm{p^{U} - p^{B}}^{2}\\
+                &\geq -(p^{U})\transpose (p^{U}-p^{B}) \\
+                &= \left(\frac{g\transpose g}{g\transpose B g}\right)g\transpose\left(-\left(\frac{g\transpose g}{g\transpose B g}\right)g + B^{-1}g \right) \\
+                &= g\transpose g \frac{g\transpose B^{-1} g}{g\transpose B g}\left[ 1 - \frac{(g\transpose g)^{2}}{\left(g\transpose B g\right) \left(g\transpose B^{-1} g \right)  } \right] \\
+                &\geq 0
+  \end{aligncustom}
+
+  \noindent
+  by the Cauchy-Schwarz inequality.
+
+  \noindent
+  Property~\ref{item:p01:prop2}: Define  $\hat{h}(\alpha)=m(\tilde{p}(1+\alpha))$.  If $h'(\alpha) \leq 0$ for $\alpha \in (0,1)$ then the property holds.  Using the definition of $\tilde{p}(\tau)$ in the exercise description and the definition of trust region, we find:
+  
+  \begin{aligncustom}
+    \hat{h}'(\alpha)  &= (p^{B} - p^{U})\transpose (g + Bp^{U}) \\
+                      &\leq (p^{B} - p^{U})\transpose (g+Bp^{U} + B(p^{B} - p^{U})) \\
+                      &= (p^{B} - p^{U})\transpose (g + Bp^{B}) = 0
+  \end{aligncustom}
+
+  \noindent
+  given $B \cdot p^{B} = -g$.
 \end{proof}
