@@ -45,10 +45,10 @@
   \textit{Case~\#1}: $0 \leq \tau \leq 1$
   
   \noindent
-  Property~\ref{item:p01:prop1}: $\norm{\tilde{p}(\tau)} = \tau \norm{p^U}$.  This is clearly increasing for $\tau \in [0,1]$ since $\norm{p^U}$ is strictly positive for $p^{U} \ne 0$.
+  \textbf{Property~\ref{item:p01:prop1}}: $\norm{\tilde{p}(\tau)} = \tau \norm{p^U}$.  This is clearly increasing for $\tau \in [0,1]$ since $\norm{p^U}$ is strictly positive for $p^{U} \ne 0$.
   
   \noindent
-  Property~\ref{item:p01:prop2}: This can be simplified via:
+  \textbf{Property~\ref{item:p01:prop2}}: This can be simplified via:
   
   \begin{aligncustom}
     m(\tilde{p}(\tau)) &= \tau g\transpose p^{U} + \frac{\tau^{2}}{2} \left(p^{U}\right)\transpose B p^{U} \\
@@ -63,7 +63,7 @@
   \textit{Case~\#2}: $1 \leq \tau \leq 2$\\
   
   \noindent
-  Property~\ref{item:p01:prop1}: Define $h(\alpha)$ where $\alpha \in (0,1)$ as:
+  \textbf{Property~\ref{item:p01:prop1}}: Define $h(\alpha)$ where $\alpha \in (0,1)$ as:
   
   \begin{aligncustom}
     h(\alpha) &= \frac{1}{2}\norm{\tilde{p}(1+\alpha)}^2\\
@@ -79,14 +79,27 @@
                 &\geq -(p^{U})\transpose (p^{U}-p^{B}) \\
                 &= \left(\frac{g\transpose g}{g\transpose B g}\right)g\transpose\left(-\left(\frac{g\transpose g}{g\transpose B g}\right)g + B^{-1}g \right) \\
                 &= g\transpose g \frac{g\transpose B^{-1} g}{g\transpose B g}\left[ 1 - \frac{(g\transpose g)^{2}}{\left(g\transpose B g\right) \left(g\transpose B^{-1} g \right)  } \right] \\
-                &\geq 0
+                &= g\transpose g \frac{g\transpose B^{-1} g}{g\transpose B g}\left[ 1 - \frac{\norm{g}^{4}}{\left(g\transpose B g\right) \left(g\transpose B^{-1} g \right)  } \right] \text{.}
+%                &\geq 0
   \end{aligncustom}
 
   \noindent
-  by the Cauchy-Schwarz inequality.
-
+  If $B$ is positive definite, then so is $B^{-1}$.  Therefore, 
+  
+  \[g\transpose g \frac{g\transpose B^{-1} g}{g\transpose B g} > 0\text{,}\]
+  
   \noindent
-  Property~\ref{item:p01:prop2}: Define  $\hat{h}(\alpha)=m(\tilde{p}(1+\alpha))$.  If $h'(\alpha) \leq 0$ for $\alpha \in (0,1)$ then the property holds.  Using the definition of $\tilde{p}(\tau)$ in the exercise description and the definition of trust region, we find:
+  and can be treated as a positive constant with respect to $\alpha$.  By the Cauchy-Schwarz inequality, $g\transpose B g \leq \norm{g} \norm{B} \norm{g}$.  This simplifies term:
+  
+  \[ \frac{\norm{g}^{4}}{\left(g\transpose B g\right) \left(g\transpose B^{-1} g \right)  } \geq \frac{1}{\norm{B}\norm{B^{-1}}} \textrm{.}\]
+  
+  \noindent
+  Again by Cauchy-Schwarz, $\norm{B}\norm{B^{-1}} \geq \norm{BB^ {-1}} = \norm{I} = 1$.  Therefore, 
+  
+  \[ \frac{1}{\norm{B}\norm{B^{-1}}} \leq 1 \textrm{.}\]
+ 
+  \noindent
+  \textbf{Property~\ref{item:p01:prop2}}: Define  $\hat{h}(\alpha)=m(\tilde{p}(1+\alpha))$.  If $h'(\alpha) \leq 0$ for $\alpha \in (0,1)$ then the property holds.  Using the definition of $\tilde{p}(\tau)$ in the exercise description and the definition of trust region, we find:
   
   \begin{aligncustom}
     \hat{h}'(\alpha)  &= (p^{B} - p^{U})\transpose (g + Bp^{U}) \\
