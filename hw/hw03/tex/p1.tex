@@ -52,15 +52,13 @@
   
   \begin{aligncustom}
     m(\tilde{p}(\tau)) &= \tau g\transpose p^{U} + \frac{\tau^{2}}{2} \left(p^{U}\right)\transpose B p^{U} \\
-                       &= \tau g\transpose p^{U} - \frac{\tau^2}{2} \left(p^{U} \right)\transpose g \\
-                       &= g\transpose p^{U} \left(\tau - \frac{\tau^2}{2} \right) \\
-                       &= -\frac{\norm{g}^2 g\transpose g}{g\transpose B g}\left(\tau - \frac{\tau^2}{2}\right) \\
-                       &= \frac{\left(\norm{g}^2\right)^2}{g\transpose B g}\left(-\tau + \frac{\tau^2}{2}\right) \\
+    &= -\tau \frac{\left(\norm{g}^2\right)^{2}}{g\transpose B g} + \frac{\tau^{2}}{2}\frac{\left(\norm{g}^2\right)^{2}}{\left(g\transpose B g\right)^{2}}g\transpose B g  \\
+    &= \left(-\tau + \frac{\tau^2}{2}\right)\frac{\left(\norm{g}^2\right)^{2}}{g\transpose B g}
   \end{aligncustom}
 
   \noindent
-  $\frac{\left(\norm{g}^2\right)^2}{g\transpose B g}$ is strictly positive by definition and is fixed with respect to $\tau$. $-\tau + \frac{\tau^2}{2}$ is strictly decreasing for $\tau \in [0,1]$.  This makes their product strictly decreasing for $\tau \in [0,1]$.
-  
+  Both $\norm{g}^{2}$ and $g\transpose B g$ are strictly positive making their ratio also strictly positive.  The ratio is also fixed with respect to $\tau$ meaning it can be treated as a positive constant.  For $\tau \in [0,1]$, $-\tau + \tau^2/2$ is strictly decreasing.
+
   \noindent
   \textit{Case~\#2}: $1 \leq \tau \leq 2$\\
   
