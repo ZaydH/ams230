@@ -19,7 +19,7 @@
   \end{aligncustom}
 
   \noindent
-  Support that symmetric matrix $B$ and vector $g$ satisfy:
+  Suppose that symmetric matrix $B$ and vector $g$ satisfy:
   
   \begin{enumerate}
     \item $g\transpose B g > 0$
@@ -39,7 +39,7 @@
 \end{problem}
 
 \begin{proof}
-  Based off Lemma~4.2 from Nocedal and Wright.  There are two cases based on the value of $\tau$.
+  This proof is to a large extent based off Lemma~4.2 from Nocedal and Wright.  The proof can be divided into two cases based on the value of $\tau$.  Proving both cases separately proves the entire statement.
   
   \noindent
   \textit{Case~\#1}: $0 \leq \tau \leq 1$
@@ -48,7 +48,7 @@
   \textbf{Property~\ref{item:p01:prop1}}: $\norm{\tilde{p}(\tau)} = \tau \norm{p^U}$.  This is clearly increasing for $\tau \in [0,1]$ since $\norm{p^U}$ is strictly positive for $p^{U} \ne 0$.
   
   \noindent
-  \textbf{Property~\ref{item:p01:prop2}}: This can be simplified via:
+  \textbf{Property~\ref{item:p01:prop2}     }: This can be simplified via:
   
   \begin{aligncustom}
     m(\tilde{p}(\tau)) &= \tau g\transpose p^{U} + \frac{\tau^{2}}{2} \left(p^{U}\right)\transpose B p^{U} \\
@@ -57,46 +57,21 @@
   \end{aligncustom}
 
   \noindent
-  Both $\norm{g}^{2}$ and $g\transpose B g$ are strictly positive making their ratio also strictly positive.  The ratio is also fixed with respect to $\tau$ meaning it can be treated as a positive constant.  For $\tau \in [0,1]$, $-\tau + \tau^2/2$ is strictly decreasing.
+  Both $\norm{g}^{2}$ and $g\transpose B g$ are strictly positive making their ratio also strictly positive.  The ratio is also fixed with respect to $\tau$ meaning it can be treated as a positive constant.  For $\tau \in [0,1]$, $-\tau + \tau^2/2$ is decreasing (as can be trivially proven by taking the derivative with respect to $\tau$).
 
   \noindent
   \textit{Case~\#2}: $1 \leq \tau \leq 2$\\
   
   \noindent
-  \textbf{Property~\ref{item:p01:prop1}}: Define $h(\alpha)$ where $\alpha \in (0,1)$ as:
+  \textbf{Property~\ref{item:p01:prop1}}: If $\norm{\tilde{p}(\tau)}$ is an increasing function, then so is $\tilde{p}(\tau) \cdot \tilde{p}(\tau)$.  Proving the latter is an increasing function proves the former is as well.
   
   \begin{aligncustom}
-    h(\alpha) &= \frac{1}{2}\norm{\tilde{p}(1+\alpha)}^2\\
-              &= \frac{1}{2} \norm{p^{U} +\alpha(p^{B}-p^{U})} \\
-              &= \frac{1}{2}\norm{p^U}^2 + \alpha\left(p^{U}\right)\transpose(p^{B}-p^{U}) + \frac{1}{2}\alpha^2\norm{p^{B}-p^{U}}^2
+    \tilde{p}(\tau) \cdot \tilde{p}(\tau) &= p^{U} \cdot p^{U} + 2(\tau-1)p^{U}\cdot(p^B - p^{U}) + (\tau-1)^2 (p^B - p^{U}) \cdot (p^B - p^{U}) \\
+            &= \norm{p^{U}}^2 + 2(\tau-1)p^{U}\cdot(p^B - p^{U}) + (\tau - 1)^{2}\norm{p^B - p^{U}}^2
   \end{aligncustom}
 
   \noindent
-  To prove the property, it is sufficient to show that $h'(\alpha) \geq 0$ for $\alpha \in (0,1)$.  Therefore,
-  
-  \begin{aligncustom}
-    h'(\alpha)  &= -\left(p^{U}\right)\transpose \left(p^{U} - p^{B} \right) + \alpha\norm{p^{U} - p^{B}}^{2}\\
-                &\geq -(p^{U})\transpose (p^{U}-p^{B}) \\
-                &= \left(\frac{g\transpose g}{g\transpose B g}\right)g\transpose\left(-\left(\frac{g\transpose g}{g\transpose B g}\right)g + B^{-1}g \right) \\
-                &= g\transpose g \frac{g\transpose B^{-1} g}{g\transpose B g}\left[ 1 - \frac{(g\transpose g)^{2}}{\left(g\transpose B g\right) \left(g\transpose B^{-1} g \right)  } \right] \\
-                &= g\transpose g \frac{g\transpose B^{-1} g}{g\transpose B g}\left[ 1 - \frac{\norm{g}^{4}}{\left(g\transpose B g\right) \left(g\transpose B^{-1} g \right)  } \right] \text{.}
-%                &\geq 0
-  \end{aligncustom}
-
-  \noindent
-  If $B$ is positive definite, then so is $B^{-1}$.  Therefore, 
-  
-  \[g\transpose g \frac{g\transpose B^{-1} g}{g\transpose B g} > 0\text{,}\]
-  
-  \noindent
-  and can be treated as a positive constant with respect to $\alpha$.  By the Cauchy-Schwarz inequality, $g\transpose B g \leq \norm{g} \norm{B} \norm{g}$.  This simplifies term:
-  
-  \[ \frac{\norm{g}^{4}}{\left(g\transpose B g\right) \left(g\transpose B^{-1} g \right)  } \geq \frac{1}{\norm{B}\norm{B^{-1}}} \textrm{.}\]
-  
-  \noindent
-  Again by Cauchy-Schwarz, $\norm{B}\norm{B^{-1}} \geq \norm{BB^ {-1}} = \norm{I} = 1$.  Therefore, 
-  
-  \[ \frac{1}{\norm{B}\norm{B^{-1}}} \leq 1 \textrm{.}\]
+  Each norm above is non-negative as is $p^{U}\cdot(p^B - p^{U})$ by supposition~2 above.  Therefore, the function is increasing when $\tau \in [1,2]$.  This can again be trivially shown by taking the derivative with respect to $\tau$ and looking in the range $[1,2]$.
  
   \noindent
   \textbf{Property~\ref{item:p01:prop2}}: Define  $\hat{h}(\alpha)=m(\tilde{p}(1+\alpha))$.  If $h'(\alpha) \leq 0$ for $\alpha \in (0,1)$ then the property holds.  Using the definition of $\tilde{p}(\tau)$ in the exercise description and the definition of trust region, we find:

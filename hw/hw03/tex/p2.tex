@@ -30,7 +30,7 @@ The Hessian can then be found via the quotient rule as shown below.
 \end{aligncustom}
 
 \noindent
-For most $x$, the Hessian was not positive definite.  To approximate the Hessian, $B_k$ was set to $Q$.  While this is not exactly the Hessian, it achieved good convergence.  I tried an alternate approach where $B_k=Q$ \textit{only} if the Hessian was not positive definite.  However, this was actually slower to converge for both Cauchy Points and Dogleg.  As such, those results are not reported in this document.
+For most $x$, the Hessian was not positive definite.  To approximate the Hessian, $B_k$ was set to $Q$.  While this is not exactly the Hessian, it achieved good convergence.  I tried an alternate approach where $B_k=Q$ \textit{only} if the Hessian was not positive definite.  However, this was generally slower to converge for both Cauchy Points and Dogleg.  As such, those results are not reported in this document.
 
 Table~\ref{tab:p02:experimentParameters} lists the parameters used in the experiments.   Note that $\mathcal{U}(a,b)$ represents a uniform random variable selected from the range $[a,b)$. Since $Q$ is positive definite, then for all $x \ne [0]^n \implies x\transpose Q x > 0$.  Therefore, since $\log$ is monotonically increasing, $f$ is minimized when $\xopt = [0]^n$.
 
@@ -53,7 +53,7 @@ Table~\ref{tab:p02:experimentParameters} lists the parameters used in the experi
   \end{tabular}
 \end{table}
 
-Figure~\ref{fig:p02:ResultsComparison} shows the performance of the Cauchy Point and Dogleg methods for the same $x_0$.  Observe that Cauchy Point took longer to converge than Dogleg.  The exact number of steps to converge varied by upto 75\% depending on the value of the random $x_0$ and $Q$.  In addition, the difference in the converge rate of Cauchy Point and Dogleg varied with $x_0$ and $Q$.
+Figure~\ref{fig:p02:ResultsComparison} shows the performance of the Cauchy Point and Dogleg methods for the same $x_0$.  Observe that Cauchy Point took longer to converge than Dogleg.  The exact number of steps to converge varied by upto 75\% depending on the value of the random $x_0$ and $Q$.  In addition, the difference in the converge rate of Cauchy Point and Dogleg varied with $x_0$ and~$Q$.
 
 \begin{figure}
   \input{pgfplots/p02_results_graph.tex}
