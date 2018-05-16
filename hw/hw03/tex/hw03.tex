@@ -26,6 +26,7 @@
 \usepackage{bm}           % Allows for bolding math symbols.
 \usepackage{tabto}        % Allows to tab to certain point on a line
 \usepackage{float}
+\usepackage{placeins}     % Allows \FloatBarrier
 
 \usepackage{mathtools} % for "\DeclarePairedDelimiter" macro
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
@@ -159,5 +160,12 @@
 
   \newpage
   \input{p2}
+  
+  \FloatBarrier  % Prevent preceding floats going to this page
+  \newpage
+  \vspace*{\fill}
+  \centering
+  \textbf{\Huge Python Source Code \\~\\ for Exercise~\#\ref{prob:02}}
+  \vspace*{\fill}
 \end{document}
 

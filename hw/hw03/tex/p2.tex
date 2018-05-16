@@ -16,20 +16,23 @@
 \end{problem}
 
 
-The gradient,~$g$, of $f$ is defined as: 
+$Q$~was constructed in the same way as homework~\#2 using QR~decomposition and a diagonal matrix of eigenvalues. The gradient,~$g$, of $f$ is defined as: 
 
-\[g = f'(x) = \frac{2Qx}{1+x\transpose Q x}\text{.}\]
+\[g = \nabla f(x) = \frac{2Qx}{1+x\transpose Q x}\text{.}\]
 
 \noindent
 The Hessian can then be found via the quotient rule as shown below.
 
 \begin{aligncustom}
-    \nabla f^{2} (x)  &= \frac{d}{dx} g = \frac{d}{dx} \frac{2Qx}{1+x\transpose Q x}\\
-                      &= \frac{1}{1+x\transpose Q x} \frac{d}{dx} \left(2Qx \right) + 2Qx \frac{d}{dx} \left(\frac{1}{1+x\transpose Q x} \right) \\
-                      &= \frac{2Q}{1+x\transpose Q x} - 2Qx \left(\frac{(2Qx)\transpose}{(1+x\transpose Q x)^{2}} \right)
+  \nabla f^{2} (x)  &= \frac{d}{dx} g = \frac{d}{dx} \frac{2Qx}{1+x\transpose Q x}\\
+                    &= \frac{1}{1+x\transpose Q x} \frac{d}{dx} \left(2Qx \right) + 2Qx \frac{d}{dx} \left(\frac{1}{1+x\transpose Q x} \right) \\
+                    &= \frac{2Q}{1+x\transpose Q x} - 2Qx \left(\frac{(2Qx)\transpose}{(1+x\transpose Q x)^{2}} \right)
 \end{aligncustom}
 
-Table~\ref{tab:p02:experimentParameters} defines the parameters used in the experiments.  $Q$ is constructed in the same way it was constructed in homework~\#2.  Note that $\mathcal{U}(a,b)$ represents a uniform random variable selected from the range $[a,b)$. Since $Q$ is positive definite, then for all $x \ne [0]^n \implies x\transpose Q x > 0$.  Therefore, since $\log$ is a monotonically increasing function, $f$ is minimized when $\xopt = [0]^n$.
+\noindent
+For most $x$, the Hessian was not positive definite.  To approximate the Hessian, $B_k$ was set to $Q$.  While this is not exactly the Hessian, it achieved good convergence.  I tried an alternate approach where $B_k=Q$ \textit{only} if the Hessian was not positive definite.  However, this was actually slower to converge for both Cauchy Points and Dogleg.  As such, those results are not reported in this document.
+
+Table~\ref{tab:p02:experimentParameters} lists the parameters used in the experiments.   Note that $\mathcal{U}(a,b)$ represents a uniform random variable selected from the range $[a,b)$. Since $Q$ is positive definite, then for all $x \ne [0]^n \implies x\transpose Q x > 0$.  Therefore, since $\log$ is monotonically increasing, $f$ is minimized when $\xopt = [0]^n$.
 
 \begin{table}[h]
   \caption{Parameters used in the experiments for Exercise~\#\ref{prob:02}}\label{tab:p02:experimentParameters}
@@ -41,14 +44,19 @@ Table~\ref{tab:p02:experimentParameters} defines the parameters used in the expe
     $\log$      &   $\log_{10}$\\\hline
     $n$         &   100\\\hline
     $\lambda$   &   $\mathcal{U}(10,1000)$ \\\hline
-    $B$         &   $\nabla f^2 (x)$ \\\hline
+    $B$         &   $Q$ \\\hline
     $\Delta_0$  &   1 \\\hline
     $\hat{\Delta}$& 10,000 \\\hline 
     $\eta$      &   0.1\\\hline
-    $x_0$       &   Random vector from $\{[0,1)\}^{n}$\\\hline
+    $x_0$       &   Random vector from $[0,1)^{n}$\\\hline
     $\xopt$     &   $[0]^n$\\\hline
   \end{tabular}
 \end{table}
 
+Figure~\ref{fig:p02:ResultsComparison} shows the performance of the Cauchy Point and Dogleg methods for the same $x_0$.  Observe that Cauchy Point took longer to converge than Dogleg.  The exact number of steps to converge varied by upto 75\% depending on the value of the random $x_0$ and $Q$.  In addition, the difference in the converge rate of Cauchy Point and Dogleg varied with $x_0$ and $Q$.
 
+\begin{figure}
+  \input{pgfplots/p02_results_graph.tex}
+  \caption{Comparison of the performance of Cauchy Point and Dog Leg}\label{fig:p02:ResultsComparison}
+\end{figure}
 

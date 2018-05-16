@@ -1,4 +1,3 @@
-import argparse
 import math
 import os
 import sys
@@ -26,6 +25,7 @@ class TrustRegion:
         """
         self._n = n
 
+        self.use_gradient = False
         self._Q = TrustRegion.build_symmetric_pos_definite(n)
         self._x = None  # type: np.ndarray
 
@@ -66,8 +66,12 @@ class TrustRegion:
         err = []
         while True:
             err.append(self.f(self._x))
-            print("%d,%.15f" % (self._k, err[-1]))
+
+            if self._k % 100 == 0:
+                print("%d,%.15f" % (self._k, err[-1]))
             if err[-1] < TrustRegion.TOLERANCE:
+                if self._k % 100 != 0:
+                    print("%d,%.15f" % (self._k, err[-1]))
                 return err
 
             self._calculate_B()
@@ -134,6 +138,14 @@ class TrustRegion:
         """
         Calculates the approximation of the Hessian B_k
         """
+        if self.use_gradient:
+            denom = (1 + self._x.T @ self._Q @ self._x)
+            q_x = (2 * self._Q @ self._x)
+            H = 2 * self._Q / denom - q_x @ q_x.T / (denom ** 2)
+
+            if np.all(np.linalg.eigvals(H) > 0):
+                self._B = H
+                return
         self._B = self._Q
 
     def _calculate_rho(self):
@@ -193,18 +205,18 @@ def calculate_dog_leg(B: np.ndarray, g: np.ndarray, delta: float) -> np.ndarray:
 if __name__ == "__main__":
     tr = TrustRegion(int(sys.argv[1]))
     algs = [("cauchy", calculate_cauchy_points), ("dog_leg", calculate_dog_leg)]
-    err = []
     for (name, alg) in algs:
-        print("\n\nStarting Algorithm: %s" % name)
-        tr.calculate_p = alg
-        f_err = tr.run()
-        err.append(f_err)
+        for use_grad in [False, True]:
+            print("\n\nStarting Algorithm: %s with use_grad=%r" % (name, use_grad))
 
-    with open("data" + os.sep + "results.csv", "w") as fout:
-        fout.write("x,cauchy,dog_leg")
-        for j in range(max([len(x) for x in err])):
-            fout.write("\n%d" % j)
-            for i in range(len(err)):
-                fout.write(",")
-                if j < len(err[i]):
-                    fout.write("%.15f" % err[i][j])
+            tr.calculate_p = alg
+            tr.use_gradient = use_grad
+            f_err = tr.run()
+
+            grad_str = "_with_grad" if use_grad else "_no_grad"
+            with open("data" + os.sep + name + grad_str + ".csv", "w") as fout:
+                fout.write("x,f(x)")
+                for i in range(len(f_err)):
+                    if f_err[i] == 0:
+                        continue
+                    fout.write("\n%d,%.15f" % (i, math.log(f_err[i])))
