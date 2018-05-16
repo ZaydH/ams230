@@ -193,11 +193,18 @@ def calculate_dog_leg(B: np.ndarray, g: np.ndarray, delta: float) -> np.ndarray:
 if __name__ == "__main__":
     tr = TrustRegion(int(sys.argv[1]))
     algs = [("cauchy", calculate_cauchy_points), ("dog_leg", calculate_dog_leg)]
+    err = []
     for (name, alg) in algs:
         print("\n\nStarting Algorithm: %s" % name)
         tr.calculate_p = alg
         f_err = tr.run()
-        with open("data" + os.sep + name + ".csv", "w") as fout:
-            fout.write("x,f(x)")
-            for i, err in enumerate(f_err):
-                fout.write("\n%d,%.15f" % (i, err))
+        err.append(f_err)
+
+    with open("data" + os.sep + "results.csv", "w") as fout:
+        fout.write("x,cauchy,dog_leg")
+        for j in range(max([len(x) for x in err])):
+            fout.write("\n%d" % j)
+            for i in range(len(err)):
+                fout.write(",")
+                if j < len(err[i]):
+                    fout.write("%.15f" % err[i][j])
