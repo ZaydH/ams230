@@ -12,7 +12,7 @@
   \[\min_{x\in \mathbb{R}^n} f(x) = \log\left(1+x\transpose Qx\right)\]
   
   \noindent
-  where $Q$ is symmetric and positive definite matrix.
+  where $Q$ is a symmetric and positive definite matrix.
 \end{problem}
 
 
@@ -21,7 +21,15 @@ The gradient,~$g$, of $f$ is defined as:
 \[g = f'(x) = \frac{2Qx}{1+x\transpose Q x}\text{.}\]
 
 \noindent
-Table~\ref{tab:p02:experimentParameters} defines the parameters used in the experiments.  $Q$ is constructed in the same way it was constructed in homework~\#2.  Note that $\mathcal{U}(a,b)$ represents a uniform random variable selected from the range $[a,b)$. Since $Q$ is positive, definite, then for all $x \ne [0]^n \implies x\transpose Q x > 0$.  Therefore, since $\log$ is a monotonically increasing function, $f$ is minimized when $\xopt = [0]^n$.
+The Hessian can then be found via the quotient rule as shown below.
+
+\begin{aligncustom}
+    \nabla f^{2} (x)  &= \frac{d}{dx} g = \frac{d}{dx} \frac{2Qx}{1+x\transpose Q x}\\
+                      &= \frac{1}{1+x\transpose Q x} \frac{d}{dx} \left(2Qx \right) + 2Qx \frac{d}{dx} \left(\frac{1}{1+x\transpose Q x} \right) \\
+                      &= \frac{2Q}{1+x\transpose Q x} - 2Qx \left(\frac{(2Qx)\transpose}{(1+x\transpose Q x)^{2}} \right)
+\end{aligncustom}
+
+Table~\ref{tab:p02:experimentParameters} defines the parameters used in the experiments.  $Q$ is constructed in the same way it was constructed in homework~\#2.  Note that $\mathcal{U}(a,b)$ represents a uniform random variable selected from the range $[a,b)$. Since $Q$ is positive definite, then for all $x \ne [0]^n \implies x\transpose Q x > 0$.  Therefore, since $\log$ is a monotonically increasing function, $f$ is minimized when $\xopt = [0]^n$.
 
 \begin{table}[h]
   \caption{Parameters used in the experiments for Exercise~\#\ref{prob:02}}\label{tab:p02:experimentParameters}
@@ -33,7 +41,10 @@ Table~\ref{tab:p02:experimentParameters} defines the parameters used in the expe
     $\log$      &   $\log_{10}$\\\hline
     $n$         &   100\\\hline
     $\lambda$   &   $\mathcal{U}(10,1000)$ \\\hline
+    $B$         &   $\nabla f^2 (x)$ \\\hline
     $\Delta_0$  &   1 \\\hline
+    $\hat{\Delta}$& 10,000 \\\hline 
+    $\eta$      &   0.1\\\hline
     $x_0$       &   Random vector from $\{[0,1)\}^{n}$\\\hline
     $\xopt$     &   $[0]^n$\\\hline
   \end{tabular}

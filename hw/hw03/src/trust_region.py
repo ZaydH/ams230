@@ -1,5 +1,6 @@
 import argparse
 import math
+import os
 import sys
 from typing import List, Callable
 
@@ -65,7 +66,7 @@ class TrustRegion:
         err = []
         while True:
             err.append(self.f(self._x))
-            print("%d,%f" % (self._k, err[-1]))
+            print("%d,%.15f" % (self._k, err[-1]))
             if err[-1] < TrustRegion.TOLERANCE:
                 return err
 
@@ -175,26 +176,28 @@ def calculate_dog_leg(B: np.ndarray, g: np.ndarray, delta: float) -> np.ndarray:
     :return: New direction
     """
     p_b = -1 * np.linalg.inv(B) @ g
-    p_u = -1 * (g.T @ g) / (g.T @ B @ g) * g
+    p_u = -1 * (np.linalg.norm(g) ** 2) / (g.T @ B @ g) * g
 
     if np.linalg.norm(p_b) <= delta:
         return p_b
 
     if np.linalg.norm(p_u) >= delta:
-        return -1 * delta * g / np.linalg.norm(g)
+        return -1 * delta / np.linalg.norm(g) * g
 
-    for t in np.linspace(1, 2, num=100):
-        if abs(np.linalg.norm(p_u + (1 - t)*(p_b - p_u)) ** 2 - delta ** 2) < TrustRegion.TOLERANCE:
-            return p_u + (1 - t)*(p_b - p_u)
+    for tau in np.linspace(1, 2, num=100):
+        p_c = p_u + (tau - 1) * (p_b - p_u)
+        if (np.linalg.norm(p_c) ** 2) - (delta ** 2) < TrustRegion.TOLERANCE:
+            return p_u + (tau - 1)*(p_b - p_u)
 
 
 if __name__ == "__main__":
     tr = TrustRegion(int(sys.argv[1]))
     algs = [("cauchy", calculate_cauchy_points), ("dog_leg", calculate_dog_leg)]
     for (name, alg) in algs:
+        print("\n\nStarting Algorithm: %s" % name)
         tr.calculate_p = alg
         f_err = tr.run()
-        with open(name + ".csv", "w") as fout:
+        with open("data" + os.sep + name + ".csv", "w") as fout:
             fout.write("x,f(x)")
             for i, err in enumerate(f_err):
                 fout.write("\n%d,%.15f" % (i, err))
