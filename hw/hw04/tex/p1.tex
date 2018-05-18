@@ -1,0 +1,41 @@
+\begin{problem}\label{prob:01}%%
+  Consider the dog-leg path:
+  
+  \[
+    \tilde{p}(\tau) = \left\{
+                        \begin{array}{cl}
+                          \tau p^{U}, & 0\leq \tau \leq 1\\
+                          p^{U} + (\tau - 1)(p^{B} - p^{U}), & 1 \leq \tau \leq 2
+                        \end{array}
+                      \right.
+  \]
+  
+  \noindent
+  where 
+  
+  \begin{aligncustom}
+    p^{U} &= -\frac{\norm{g}^2}{g\transpose B g} g\\
+    B \cdot p^{B} &= -g \text{.}
+  \end{aligncustom}
+
+  \noindent
+  Suppose that symmetric matrix $B$ and vector $g$ satisfy:
+  
+  \begin{enumerate}
+    \item $g\transpose B g > 0$
+    \item $\left(p^{U}\right)\transpose \left(p^{B} - p^{U}\right) > 0$
+  \end{enumerate}
+
+  \noindent
+  Prove that:
+
+  \begin{enumerate}[i.]
+    \item\label{item:p01:prop1} $\norm{\tilde{p}(\tau)}$ is an increasing function of $\tau$
+    \item\label{item:p01:prop2} $m(\tilde{p}(\tau))$ is a decreasing function of $\tau$
+  \end{enumerate}
+
+  \noindent
+  where $m(p) = g\transpose p + \frac{1}{2}p\transpose B p$.
+\end{problem}
+
+
