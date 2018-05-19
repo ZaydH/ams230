@@ -1,18 +1,9 @@
-\begin{problem}\label{prob:02}%%
-  Code Algorithm~4.1 in Nocedal and Wrihght with:
+\begin{problem}\label{prob:03}%%
+  Code Algorithm 7.5, and test it on the extended Rosenbrock function
   
-  \begin{enumerate}
-    \item Cauchy point method for the subproblem
-    \item Dog-leg method based on the results for Exercise~\ref{prob:01}.
-  \end{enumerate}
-
-  \noindent
-  Test and compare the performance of the methods on the following problem:
+  \[ f(x) = \sum_{i=1}^{n/2} \left[ \alpha(x_{2i} - x^2_{2i-1})^2 + (1-x_{2i-1})^2 \right] \text{.} \]
   
-  \[\min_{x\in \mathbb{R}^n} f(x) = \log\left(1+x\transpose Qx\right)\]
-  
-  \noindent
-  where $Q$ is a symmetric and positive definite matrix.
+  where $\alpha$ is a parameter that you can vary (for example, 1 or 100). The solution is $\xopt=(1,1,...,1)\transpose$, $f^{*}=0$. Choose the starting point as $(-1,-1,...,-1)\transpose$. Observe the behavior of your program for various values of the memory parameter $m$.
 \end{problem}
 
 

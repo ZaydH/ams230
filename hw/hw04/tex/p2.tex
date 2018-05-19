@@ -1,18 +1,21 @@
 \begin{problem}\label{prob:02}%%
-  Code Algorithm~4.1 in Nocedal and Wrihght with:
+  Exercise~6.4 in Nocedal and Wright.
   
-  \begin{enumerate}
-    \item Cauchy point method for the subproblem
-    \item Dog-leg method based on the results for Exercise~\ref{prob:01}.
-  \end{enumerate}
-
-  \noindent
-  Test and compare the performance of the methods on the following problem:
+  Show that
   
-  \[\min_{x\in \mathbb{R}^n} f(x) = \log\left(1+x\transpose Qx\right)\]
+  \[ B_{k+1} = B_{k} + \frac{(y_k-B_{k}s_{k})(y_k-B_{k}s_{k})\transpose}{(y_k-B_{k}s_{k})\transpose s_k} \]
   
-  \noindent
-  where $Q$ is a symmetric and positive definite matrix.
+  is the inverse of 
+   
+  \[ H_{k+1} = H_k + \frac{(s_k-B_{k}y_{k})(s_k-B_{k}y_{k})\transpose}{(s_k-B_{k}y_{k})\transpose y_k} \text{.}\]
+  
+  \textbf{Note}: \textnormal{By the \textbf{Sherman-Morrison formula}, if the square nonsingular matrix $A$ undergoes a rank-one update to become}
+  
+  \[\bar{A} = A + ab\transpose\]
+  
+  where $a,b\in \mathbb{R}^n$, then if $\overline{A}$ is nonsingular, we have:
+  
+  \[\bar{A}^{-1} = A^{-1} - \frac{A^{-1}ab\transpose A^{-1}}{1+b\transpose A^{-1}a} \text{.} \]
 \end{problem}
 
 
