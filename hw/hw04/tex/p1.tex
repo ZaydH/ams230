@@ -1,29 +1,40 @@
 \begin{problem}\label{prob:01}%%
-  Exercise~6.1 in Nocedal and Wright. 
-  
-  
-  
+  Exercise~6.1 in Nocedal and Wright.
+
+
+
   \textbf{Hint}: \textnormal{If a function $f(x)$ is strongly convex, there exists $\sigma > 0$ such that $v\transpose \nabla^{2}f(x) v \geq \sigma \norm{v}^2$.}
 \end{problem}
 
 \begin{subproblem}
   Show that if $f$ is strongly convex, then
-  
+
   \[ s_{k}\transpose y_k > 0 \]
 
   \vspace{-1em}
   holds for any vectors $x_k$ and $x_{k+1}$.
 \end{subproblem}
 
-Define $s_k=x_{k+1}-x_k$ as the change in position between consecutive iterates.  Since $x_{k+1}=x_k + \alpha_k p_k$, $s_k = \alpha_k p_k$.  Next, define $y_k = \nabla f_{k+1} - \nabla f_k$.  Using the definition of $m_{k+1}$, we see that $y_k = B_{k+1}s_k=B_{k+1}\alpha_k p_k$.  Therefore,
+\begin{proof}
+  A function,~$f$, is \textit{strongly convex} if it holds that:
 
-\[ s_k\transpose y_k = (\alpha_k p_k)\transpose B_{k+1} \alpha_k p_k = c p_k\transpose B_{k+1} p_k\text{.} \]
+  \[\bigg(\nabla f(x) - \nabla f(y)\bigg)\transpose (x-y) \geq m \norm{x-y}^2 \]
 
+  \noindent
+  for some $m>0$.  Define $s_k=x_{k+1}-x_k$ as the change in position between consecutive iterates.  Define $y_k = \nabla f_{k+1} - \nabla f_k$. Given a strongly convex $f(x)$, we get:
+
+  \[y_k\transpose s_k \geq m \norm{s_k}^2 \text{.}\]
+
+  \noindent
+  If $x_k \neq x_{k+1}$, then by definition $\norm{s_k}>0$. Also, $y_k\transpose s_k = s_k\transpose y_k$.  Therefore,
+
+  \[s_k\transpose y_k >0 \text{.} \]
+\end{proof}
 
 \begin{subproblem}
   Give an example of a function of one variable satisfying $g(0)=-1$ and $g(1)=-\frac{1}{4}$ and show that (6.7) does not hold in this case.
 \end{subproblem}
 
-Consider the simple univariate function $f(x) =\frac{1}{x+1}$ whose gradient $\nabla f(x) = g(x)= \frac{-1}{(x+1)^2}$.  This function is obviously not convex, but its gradient satisfies the property that $g(0)=-1$ and $g(1) = -0.25$. 
+Consider the simple univariate function $f(x) =\frac{1}{x+1}$ whose gradient $\nabla f(x) = g(x)= \frac{-1}{(x+1)^2}$.  This function is obviously not convex, but its gradient satisfies the property that $g(0)=-1$ and $g(1) = -0.25$.
 
 
