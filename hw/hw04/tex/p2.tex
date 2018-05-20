@@ -7,13 +7,13 @@
   
   is the inverse of 
    
-  \[ H_{k+1} = H_k + \frac{(s_k-B_{k}y_{k})(s_k-B_{k}y_{k})\transpose}{(s_k-B_{k}y_{k})\transpose y_k} \text{.}\]
+  \[ H_{k+1} = H_k + \frac{(s_k-H_{k}y_{k})(s_k-H_{k}y_{k})\transpose}{(s_k-H_{k}y_{k})\transpose y_k} \text{.}\]
   
   \textbf{Note}: \textnormal{By the \textbf{Sherman-Morrison formula}, if the square nonsingular matrix $A$ undergoes a rank-one update to become}
   
   \[\bar{A} = A + ab\transpose\]
   
-  where $a,b\in \mathbb{R}^n$, then if $\overline{A}$ is nonsingular, we have:
+  \textnormal{where $a,b\in \mathbb{R}^n$, then if $\bar{A}$ is nonsingular, we have:}
   
   \[\bar{A}^{-1} = A^{-1} - \frac{A^{-1}ab\transpose A^{-1}}{1+b\transpose A^{-1}a} \text{.} \]
 \end{problem}
