@@ -6,9 +6,7 @@
   where $\alpha$ is a parameter that you can vary (for example, 1 or 100). The solution is $\xopt=(1,1,...,1)\transpose$, $f^{*}=0$. Choose the starting point as $(-1,-1,...,-1)\transpose$. Observe the behavior of your program for various values of the memory parameter $m$.
 \end{problem}
 
-
-
-For even valued $n$, the function's gradient is:
+For even valued $n$, the gradient of $f$ is:
 
 \[
 \nabla f(x) = \left\{
@@ -20,4 +18,12 @@ For even valued $n$, the function's gradient is:
 \]
 
 \noindent
-where ${j \in \{1,\ldots,n\}}$
+where ${j \in \{1,\ldots,n\}}$.  Since LBFGS relies on line search, $\phi(\alpha) = f(x_k + \alpha_k p_k)$.  In addition, by the chain rule, 
+
+\begin{aligncustom}
+  \phi'(\alpha) &= \frac{\partial f(x_k+\alpha p_k)}{\partial \alpha} \\
+                &= \frac{\partial f(x_k+\alpha p_k)}{\partial x_k} \cdot \frac{\partial x_k}{\partial \alpha} \\
+                &= \nabla f(x_k + \alpha p_k) \cdot p_k \text{.}
+\end{aligncustom}
+
+
