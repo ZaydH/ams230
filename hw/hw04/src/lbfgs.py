@@ -1,6 +1,7 @@
 import logging
 import sys
 import numpy as np
+import math
 
 
 class LBFGS:
@@ -71,10 +72,10 @@ class LBFGS:
 
             # ToDo Verify the value of d0
             # d_0 = np.zeros((self._n, self._n))
-            d_0 = np.identity(self._n)
-
-            self._H = self._bfgs_rec(d_0, min(self._k, self.m))
-            self._p = -1 * self._H @ self._g(self._x)
+            # d_0 = np.identity(self._n)
+            # self._H = self._bfgs_rec(d_0, min(self._k, self.m))
+            # self._p = -1 * self._H @ self._g(self._x)
+            self._p = self._bfgs_rec(-self._g(self._x), min(self._k, self.m))
             alpha_k = self._line_search()
 
             # Update the stored memory parameters
@@ -241,7 +242,7 @@ if __name__ == "__main__":
     setup_logger()
     lbfgs = LBFGS(_n, _alpha)
 
-    for _m in [sys.maxsize, 1, 5, 10, 20, 100, 1]:
+    for _m in [sys.maxsize, 1, 5, 10, 20, 100]:
         lbfgs.m = _m
         lbfgs.run()
 
@@ -249,4 +250,6 @@ if __name__ == "__main__":
         with open(file_name, "w") as fout:
             fout.write("k,f_err")
             for _k, err in enumerate(lbfgs.err):
-                fout.write(f"\n{_k},{err}")
+                if err == 0:
+                    continue
+                fout.write(f"\n{_k},%.16f" % math.log10(err))
