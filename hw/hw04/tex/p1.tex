@@ -35,12 +35,12 @@
   Give an example of a function of one variable satisfying $g(0)=-1$ and $g(1)=-\frac{1}{4}$ and show that (6.7) does not hold in this case.
 \end{subproblem}
 
-Consider the univariate function $f(x) =\frac{1}{x+1}$ whose gradient $\nabla f(x) = g(x)= \frac{-1}{(x+1)^2}$.  This function is obviously not convex, but its gradient satisfies the property that $g(0)=-1$ and $g(1) = -0.25$.  $g(-2) = -1$.  Substituting into the above, we get:
+Consider the univariate function $f(x) =\frac{1}{x+1}$ whose gradient $\nabla f(x) = g(x)= -\frac{1}{(x+1)^2}$.  This function is obviously not convex, but its gradient satisfies the property that $g(0)=-1$ and $g(1) = -0.25$. Consider $x_1 = -2$ and $x_2 = 0$.  $g(x_1) = g(x_2) = -1$ making 
 
-\[s\transpose y = (-2 - 0)(g(-2) - g(0)) = -2 (-1 - 1) = 0 \text{.} \]
+\[s\transpose y = 0 \text{.} \]
 
 \noindent
-Clearly, this does not satisfy the above condition that $s_k\transpose y_k >0$.
+Clearly, this does not satisfy the above condition that $s\transpose y >0$.
 
 
 

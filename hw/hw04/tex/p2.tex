@@ -26,8 +26,14 @@ By definition $H_k = B_k^{-1}$. Define $a = b = y_k - B_k s_k$ and $\rho = \frac
 This can be substituted into the Sherman-Morrison-Woodbury formula as:
 
 \begin{aligncustom}
-  B_{k+1}^{-1} &= B_k^{-1} - \frac{B_{k}^{-1} \rho (y_k - B_k s_k) (y_k - B_k s_k)\transpose B_{k}^{-1}}{1 + (y_k - B_k s_k)\transpose B_k^{-1} \rho(y_k - B_k s_k)} \\
-               &= B_k^{-1} - \frac{(B_{k}^{-1} y_k - s_k) (B_{k}^{-1} y_k - s_k)\transpose }{(y_k-B_{k}s_{k})\transpose s_k + (y_k - B_k s_k)\transpose (B_k^{-1} y_k - s_k)} \\
+  B_{k+1}^{-1} &= B_k^{-1} - \frac{B_{k}^{-1} \rho (y_k - B_k s_k) (y_k - B_k s_k)\transpose B_{k}^{-1}}{1 + (y_k - B_k s_k)\transpose B_k^{-1} \rho(y_k - B_k s_k)}
+\end{aligncustom}
+  
+\noindent
+$B_k$ is a symmetric, nonsingular matrix.  As such, $B_{k}^{-1}$ is also a symmetric, nonsingular matrix.  Therefore,
+
+\begin{aligncustom}
+  B_{k+1}^{-1} &= B_k^{-1} - \frac{(B_{k}^{-1} y_k - s_k) (B_{k}^{-1} y_k - s_k)\transpose }{(y_k-B_{k}s_{k})\transpose s_k + (y_k - B_k s_k)\transpose (B_k^{-1} y_k - s_k)} \\
                &= B_k^{-1} - \frac{(s_k - B_{k}^{-1} y_k) (s_k - B_{k}^{-1} y_k)\transpose }{y_k\transpose s_k - (B_{k}s_{k})\transpose s_k + y_k\transpose B_k^{-1}y_k - y_k\transpose s_k - s_k\transpose y_k + (B_{k}s_k)\transpose s_k} \\
                &= B_k^{-1} - \frac{(s_k - B_{k}^{-1} y_k) (s_k - B_{k}^{-1} y_k)\transpose }{ y_k\transpose B_k^{-1}y_k - s_k\transpose y_k } \\
                &= B_k^{-1} - \frac{(s_k - B_{k}^{-1} y_k) (s_k - B_{k}^{-1} y_k)\transpose }{ (B_k^{-1}y_k - s_k)\transpose y_k } \\
