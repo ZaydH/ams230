@@ -18,4 +18,23 @@
   \[\bar{A}^{-1} = A^{-1} - \frac{A^{-1}ab\transpose A^{-1}}{1+b\transpose A^{-1}a} \text{.} \]
 \end{problem}
 
+By definition $H_k = B_k^{-1}$. Define $a = b = y_k - B_k s_k$ and $\rho = \frac{1}{(y_k-B_{k}s_{k})\transpose s_k}$.  Substituting
 
+\[ B_{k+1} = B_k + \rho ab\transpose \text{.}\]
+
+\noindent
+This can be substituted into the Sherman-Morrison-Woodbury formula as:
+
+\begin{aligncustom}
+  B_{k+1}^{-1} &= B_k^{-1} - \frac{B_{k}^{-1} \rho (y_k - B_k s_k) (y_k - B_k s_k)\transpose B_{k}^{-1}}{1 + (y_k - B_k s_k)\transpose B_k^{-1} \rho(y_k - B_k s_k)} \\
+               &= B_k^{-1} - \frac{(B_{k}^{-1} y_k - s_k) (B_{k}^{-1} y_k - s_k)\transpose }{(y_k-B_{k}s_{k})\transpose s_k + (y_k - B_k s_k)\transpose (B_k^{-1} y_k - s_k)} \\
+               &= B_k^{-1} - \frac{(s_k - B_{k}^{-1} y_k) (s_k - B_{k}^{-1} y_k)\transpose }{y_k\transpose s_k - (B_{k}s_{k})\transpose s_k + y_k\transpose B_k^{-1}y_k - y_k\transpose s_k - s_k\transpose y_k + (B_{k}s_k)\transpose s_k} \\
+               &= B_k^{-1} - \frac{(s_k - B_{k}^{-1} y_k) (s_k - B_{k}^{-1} y_k)\transpose }{ y_k\transpose B_k^{-1}y_k - s_k\transpose y_k } \\
+               &= B_k^{-1} - \frac{(s_k - B_{k}^{-1} y_k) (s_k - B_{k}^{-1} y_k)\transpose }{ (B_k^{-1}y_k - s_k)\transpose y_k } \\
+               &= B_k^{-1} + \frac{(s_k - B_{k}^{-1} y_k) (s_k - B_{k}^{-1} y_k)\transpose }{ (s_k - B_k^{-1}y_k)\transpose y_k }
+\end{aligncustom}
+
+\noindent
+By definition $B_{k}^{-1} = H_k$.  Therefore
+
+\[ H_{k+1} = H_k + \frac{(s_{k} - H_{k} y_{k}) (s_{k} - H_{k} y_{k})\transpose }{ (s_{k} - H_{k} y_{k})\transpose y_{k}} \]
