@@ -1,3 +1,4 @@
+import logging
 import sys
 import numpy as np
 
@@ -40,7 +41,6 @@ class LBFGS:
     def run(self):
         """
         Based on Algorithm 7.5 (L-BFGS) of Nocedal and Wright (pg. 179).
-        :return:
         """
         assert self.m is not None and self.m > 0
 
@@ -52,6 +52,9 @@ class LBFGS:
         self._Y = []
         while True:
             self.err.append(self._f(self._x))
+            if self._k % 1 == 0:
+                logging.info(f"m={self.m}, k={self._k} --- err=%.10f" % self.err[-1])
+
             if self.err[-1] < LBFGS.STOP_ERR:
                 return
 
@@ -66,14 +69,17 @@ class LBFGS:
             else:
                 self._gamma = (self._S[-1].T @ self._Y[-1]) / (self._Y[-1].T @ self._Y[-1])
 
-            d_0 = np.zeros((self._n, self._n))  # ToDo Verify the value of d0
+            # ToDo Verify the value of d0
+            # d_0 = np.zeros((self._n, self._n))
+            d_0 = np.identity(self._n)
+
             self._H = self._bfgs_rec(d_0, min(self._k, self.m))
             self._p = -1 * self._H @ self._g(self._x)
             alpha_k = self._line_search()
 
             # Update the stored memory parameters
             x_prev = self._x
-            self._x += alpha_k * self._p
+            self._x = self._x + alpha_k * self._p
             self._S.append(self._x - x_prev)
             self._Y.append(self._g(self._x) - self._g(x_prev))
             self._k += 1
@@ -87,9 +93,9 @@ class LBFGS:
         :return: Value of the extended Rosenbrock function at point \p x.
         """
         f_x = 0
-        for j in range(1, (self._n // 2) + 1):
-            i = 2 * j - 1
-            f_x += self._alpha * (x[i] - (x[i - 1] ** 2)) ** 2 + (1 - x[i - 1]) ** 2
+        for _i in range(1, (self._n // 2) + 1):
+            j = 2 * _i - 1
+            f_x += self._alpha * (x[j] - (x[j - 1] ** 2)) ** 2 + (1 - x[j - 1]) ** 2
         return f_x
 
     def _phi(self, alpha: float) -> float:
@@ -130,7 +136,7 @@ class LBFGS:
         :return:
         """
         if k == 0:
-            return self._gamma * np.identity(self._n)
+            return self._gamma * d
         else:
             # Subtract one since indexed from 0
             s_k = self._S[k - 1]
@@ -201,12 +207,41 @@ class LBFGS:
                 alpha_lo = alpha_m
 
 
+def setup_logger(filename="tester.log", log_level=logging.DEBUG):
+    """
+    Logger Configurator
+
+    Configures the test logger.
+
+    :param filename: Log file name
+    :type filename: str
+    :param log_level: Level to log
+    :type log_level: int
+    """
+    date_format = '%m/%d/%Y %I:%M:%S %p'  # Example Time Format - 12/12/2010 11:46:36 AM
+
+    logging.basicConfig(filename=filename, level=log_level,
+                        format='%(asctime)s -- %(levelname)s -- %(message)s',
+                        datefmt=date_format)
+
+    # Also print to stdout
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(log_level)
+    formatter = logging.Formatter('%(asctime)s -- %(levelname)s -- %(message)s')
+    handler.setFormatter(formatter)
+    logging.getLogger().addHandler(handler)
+
+    logging.info("***************************** New Run Beginning ****************************")
+
+
 if __name__ == "__main__":
     _n = int(sys.argv[1])
     _alpha = float(sys.argv[2])
+
+    setup_logger()
     lbfgs = LBFGS(_n, _alpha)
 
-    for _m in [1, 5, 10, 20, 100, sys.maxsize]:
+    for _m in [sys.maxsize, 1, 5, 10, 20, 100, 1]:
         lbfgs.m = _m
         lbfgs.run()
 
