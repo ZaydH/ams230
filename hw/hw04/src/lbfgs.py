@@ -28,7 +28,7 @@ class LBFGS:
         self._p = None
 
         # Values for line search
-        self._alpha0 = 1
+        self._alpha0 = 0
         self._c1 = 0.1
         self._c2 = 0.45
 
@@ -43,7 +43,7 @@ class LBFGS:
         """
         Based on Algorithm 7.5 (L-BFGS) of Nocedal and Wright (pg. 179).
         """
-        assert self.m is not None and self.m > 0
+        assert self.m is not None  # and self.m > 0
 
         self._k = 0
         self._x = self._x0
@@ -60,11 +60,11 @@ class LBFGS:
                 return
 
             # Limit the recursion depth
-            if self._k > self.m:
+            if self._k > self.m > 0:
                 self._S = self._S[1:]
                 self._Y = self._Y[1:]
             # Calculate gamma as defined in Eq. (7.20) of Nocedal and Wright
-            if self._k == 0:
+            if self._k == 0 or self.m == 0:
                 # ToDo Confirm gamma_0 value
                 self._gamma = 1
             else:
@@ -75,14 +75,15 @@ class LBFGS:
             # d_0 = np.identity(self._n)
             # self._H = self._bfgs_rec(d_0, min(self._k, self.m))
             # self._p = -1 * self._H @ self._g(self._x)
-            self._p = self._bfgs_rec(-self._g(self._x), min(self._k, self.m))
+            self._p = -self._bfgs_rec(self._g(self._x), min(self._k, self.m))
             alpha_k = self._line_search()
 
             # Update the stored memory parameters
             x_prev = self._x
             self._x = self._x + alpha_k * self._p
-            self._S.append(self._x - x_prev)
-            self._Y.append(self._g(self._x) - self._g(x_prev))
+            if self.m > 0:
+                self._S.append(self._x - x_prev)
+                self._Y.append(self._g(self._x) - self._g(x_prev))
             self._k += 1
 
     def _f(self, x: np.ndarray) -> float:
@@ -188,13 +189,15 @@ class LBFGS:
         """
         phi_al_0 = self._phi(self._alpha0)
         d_phi_al_0 = self._d_phi(self._alpha0)
+        num_iteration = 0
         while True:
             alpha_m = (alpha_lo + alpha_hi) / 2
             # Handle the case where floating point error is too high
-            if alpha_hi == alpha_lo:
+            if alpha_hi == alpha_lo or num_iteration > 100:
                 return alpha_m
 
             phi_alpha = self._phi(alpha_m)
+            num_iteration += 1
 
             if phi_alpha > phi_al_0 + self._c1 * alpha_m * d_phi_al_0 \
                     or phi_alpha >= self._phi(alpha_lo):
@@ -242,13 +245,13 @@ if __name__ == "__main__":
     setup_logger()
     lbfgs = LBFGS(_n, _alpha)
 
-    for _m in [sys.maxsize, 1, 5, 10, 20, 100]:
+    for _m in [sys.maxsize, 0, 1, 2, 4, 5, 7, 10, 15, 20, 100]:
         lbfgs.m = _m
         lbfgs.run()
 
         file_name = f"lbfgs_m={_m}.csv"
         with open(file_name, "w") as fout:
-            fout.write("k,f_err")
+            fout.write("k,ferr")
             for _k, err in enumerate(lbfgs.err):
                 if err == 0:
                     continue

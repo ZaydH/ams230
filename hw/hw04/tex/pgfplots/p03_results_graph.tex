@@ -1,0 +1,78 @@
+\centering
+%\tikzstyle{dotted}=                  [dash pattern=on \pgflinewidth off 2pt]
+%\tikzstyle{densely dotted}=          [dash pattern=on \pgflinewidth off 1pt]
+%\tikzstyle{loosely dotted}=          [dash pattern=on \pgflinewidth off 4pt]
+%\tikzstyle{dashed}=                  [dash pattern=on 3pt off 3pt]
+%\tikzstyle{densely dashed}=          [dash pattern=on 3pt off 2pt]
+%\tikzstyle{loosely dashed}=          [dash pattern=on 3pt off 6pt]
+%\tikzstyle{dashdotted}=              [dash pattern=on 3pt off 2pt on \the\pgflinewidth off 2pt]
+%\tikzstyle{densely dashdotted}=      [dash pattern=on 3pt off 1pt on \the\pgflinewidth off 1pt]
+%\tikzstyle{loosely dashdotted}=      [dash pattern=on 3pt off 4pt on \the\pgflinewidth off 4pt]
+\begin{tikzpicture}[
+    % Dashed style is shown here: https://tex.stackexchange.com/questions/45275/tikz-get-values-for-predefined-dash-patterns
+    dashdotted/.style         = {dash pattern=on 3pt off 2pt on \the\pgflinewidth off 2pt},
+    loosely dashed/.style     = {dash pattern=on 3pt off 6pt},
+    densely dashdotted/.style = {dash pattern=on 3pt off 1pt on \the\pgflinewidth off 1pt},
+    densely dotted/.style     = {dash pattern=on \pgflinewidth off 1pt},
+  ]
+  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/lbfgs_m=1.csv}\mOne
+  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/lbfgs_m=2.csv}\mTwo
+  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/lbfgs_m=5.csv}\mFive
+  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/lbfgs_m=10.csv}\mTen
+  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/lbfgs_m=20.csv}\mTwenty
+  \pgfplotstableread[col sep=comma] {pgfplots/plot_data/lbfgs_max_mem.csv}\maxMem
+  \begin{axis}[
+      width=10cm,
+      height=10cm,
+      xmin=0,
+      xmax=35,
+      minor x tick num=3,
+      ymin=-14,
+      ymax=6,
+      minor y tick num=1,
+      every tick label/.append style={font=\scriptsize},  % Reduce axis font size
+      xlabel={Iteration \#},
+      ylabel={$\log_{10} f(x)$},
+      xlabel style={font=\scriptsize},
+      ylabel style={font=\scriptsize},
+      ylabel shift = -4pt,
+      title={L-BFGS performance comparison for different values of $m$},
+    ]
+    \addplot[
+      color=red,
+      thick
+    ]
+    table[x index=0,y index=1] {\mOne};
+    \addplot[
+      color=green,
+      dashdotted,
+      thick
+    ]
+    table[x index=0,y index=1] {\mTwo};
+    \addplot[
+      color=orange,
+      loosely dashed,
+      thick
+    ]
+    table[x index=0,y index=1] {\mFive};
+    \addplot[
+      color=blue,
+      densely dashdotted,
+      thick
+    ]
+    table[x index=0,y index=1] {\mTen};
+    \addplot[
+      color=purple,
+      densely dotted,
+      thick
+    ]
+    table[x index=0,y index=1] {\mTwenty};
+    \addplot[
+      color=black,
+      dashed,
+      thick
+    ]
+    table[x index=0,y index=1] {\maxMem};
+    \legend{$m=1$, $m=2$, $m=5$, $m=10$, $m=20$, Max $m$};
+  \end{axis}
+\end{tikzpicture}

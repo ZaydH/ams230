@@ -26,4 +26,26 @@ where ${j \in \{1,\ldots,n\}}$.  Since LBFGS relies on line search, $\phi(\alpha
                 &= \nabla f(x_k + \alpha p_k) \cdot p_k \text{.}
 \end{aligncustom}
 
+Table~\ref{tab:p03:ExperimentParameters} lists the experiment parameters for this problem.  The implementation of line search remains essentially unchanged from that used in homeworks~\#1 and~\#2.  When $\alpha$ in the extended Rosenbrock function was set to~1, the model converged too quickly.  As such, $\alpha$ was set to~100.
 
+\begin{table}[h]
+  \centering
+  \caption{Experiment parameters for problem~\#3}\label{tab:p03:ExperimentParameters}
+  \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Name} & \textbf{Value} \\\hline\hline
+    $n$         & 1,000 \\\hline
+    $\alpha$    & 100 \\\hline
+    $x_0$       & $[-1]^{n}$ \\\hline
+    $\alpha_0$  & 0 \\\hline
+    $c_1$       & 0.1 \\\hline
+    $c_2$       & 0.45 \\\hline
+  \end{tabular}
+\end{table}
+
+When $m=0$, i.e., the algorithm behaves in a memoryless fashion and converges as traditional line search, it took 2,340 iterations to converge (not shown).  Figure~\ref{fig:p03:ResultsPlot} shows the results for different values of $m$.  As expected, when $m=1$, it took the longest to converge.  For $m\geq 2$, the convergence rate was essentially the same.  While for $m=2$ and $m=5$, the convergence was marginally, the difference was marginal and not unexpected as excluding some gradients may cause the algorithm to perform better in some cases.  For $m=10$, $m=20$, and maximum $m$ (i.e., save all previous results), the algorithm performed essentially the same.  This means that only the most recent gradients affected the results and memory of distant iterations does not improve the results for this function.
+
+\begin{figure}
+ \input{pgfplots/p03_results_graph}
+  \caption{Convergence of L-BFGS for different values of $m$ on the extended Rosenbrock function with $\alpha=100$}\label{fig:p03:ResultsPlot}
+\end{figure}
