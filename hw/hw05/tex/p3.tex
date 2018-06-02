@@ -9,7 +9,9 @@ This can be framed as the constrained optimization problem below.
 \[ \min f(x)=\sum_i x_i^2 \text{ s.t. } a\transpose x + \alpha \ge 0 \text{.}\]
 
 \noindent
-The gradient of $f(x)$ equals:
+If $\alpha > 0$, then trivially the $\xopt$ that minimizes the $f(x)$ is the zero vector since $f(x)=0$.  For all other $x \ne \vec{0}$, $f(x)$ is strictly positive.  
+
+Consider the more interesting case when $\alpha$ is less than~0.  First, the gradient of $f(x)$ equals:
 
 \[\nabla f(x) = (2x_1,\ldots,2x_n) \text{.} \]
 
@@ -19,20 +21,34 @@ Similarly, the gradient of the constraint $c(x)$:
 \[\nabla c(x) = a \text{.}\]
 
 \noindent
-By the fourth KKT condition $\lambda^{*} c(x^{*}) = 0$ yielding:
+By the first KKT condition, 
 
 \begin{aligncustom}
-  \lambda(a\transpose x + \alpha) &= 0 \\
-  a\transpose x = -\alpha
+  \mathcal{L}(\xopt,\lambda^{*}) = \nabla f(\xopt) -\lambda^{*} \nabla c(\xopt) &= 0\\
+  2 \xopt - \lambda^{*} a = 0 \\
+  \xopt = \frac{\lambda^{*}}{2}a \text{.}
 \end{aligncustom}
 
 \noindent
-for $\lambda \ne 0$. Therefore,
+By the fifth KKT condition,
 
 \begin{aligncustom}
-  \nabla f(x) &= \lambda \nabla c(x) \\
-  2x &= \lambda a \\
-  2a\transpose x &= \lambda \norm{a}^2 \\
-  -2 \alpha &=\lambda \norm{a}^2 \\
-  \frac{-2\alpha}{\norm{a}^2} &= \lambda
+  \lambda^{*}c(\xopt) &= 0\\
+  \lambda^{*}(a\transpose \xopt +\alpha) &= 0
 \end{aligncustom}
+
+\noindent
+$\lambda=0$ is not a valid value if $\alpha < 0$.  Instead continuing by the fourth KKT condition where $\lambda >0$,
+
+\begin{aligncustom}
+  a\transpose \xopt +\alpha &= 0 \\
+  a\transpose \left(\frac{\lambda^{*}}{2}a\right) &= -\alpha \\
+  \lambda^{*} &= -\frac{2\alpha}{\norm{a}^2}
+\end{aligncustom}
+
+\noindent
+This makes 
+
+\[\boxed{\xopt = -\frac{\alpha}{\norm{a}^2}a} \text{.}\]
+
+Since $\alpha$ is negative, $\lambda^{*}$ is positive satisfying the third KKT condition.  We already proved above the fourth and fifth KKT conditions.
