@@ -25,21 +25,44 @@ Rewrite $c_1(x,y)=(x-1)^2-5y=0$.  Its gradient is:
   Find all the KKT points for this problem.  Is the LICQ satisfied?
 \end{subproblem}
 
-Lagrangian multiplier $\lambda$ only holds when $\nabla f = \lambda \nabla c_1$.  In the case of the first dimension, $\nabla f = \lambda \nabla c_1$.  There are two possible cases:
+For a single constraint, Lagrangian multiplier $\lambda_1$ only holds when $\nabla f = \lambda_1 \nabla c_1$.  In the case of the first dimension, $\nabla f = \lambda_1 \nabla c_1$.  There are two possible cases:
 
 \noindent
-\textit{Case~\#1}: $\lambda=1$.  This means $2(y-2)=-5$ making $y=-1/2$.  Clearly, this is not possible so we can drop this case.
+\textit{Case~\#1}: $\lambda=1$.  This means $2(y-2)=-5$ making $y=-1/2$.  Clearly, this not valid so we can drop this case.
 
 \noindent
-\text{Case~\#2}: $x=1$.  This makes $y=0$ and $\lambda=4/5$.
+\text{Case~\#2}: $x=1$.  Trivially, this makes $y=0$ and $\lambda_1=4/5$.  Therefore, $\xopt=(1,0)$.  Clearly then 
+
+\[\nabla \mathcal{L}(x,y,\lambda_1)=\nabla (f(x,y)-\lambda_1 c_1(x,y)) = 0 \] 
+
+\noindent
+and $c_1(1,0)=0$ satisfying Eq.~(12.34a) and Eq.~(12.34b).  Since there is only an equality constraint, we can ignore KKT inequality constraints Eq.~(12.34c) and Eq.~(12.34d).  In addition, Eq.~(12.34e) follows from proving $c_1(\xopt)=0$.
+
+Since there is only a single constraint, LICQ is established by showing only that $\nabla c_{1}(\xopt) = (0, -5) \ne \vec{0}$.  
 
 \begin{subproblem}
   Which of these points are solutions?
 \end{subproblem}
 
+The point $(1,0)$ is a solution.
+
 \begin{subproblem}
   By directly substituting the constraint into the objective function and eliminating the variable~$x$, we obtain an unconstrained optimization problem.  Show that the solutions of this problem cannot be solutions to the original problem.
 \end{subproblem}
 
+Substituting the constraint into the objective function yields:
 
+\[ f(y)=5y + (y-2)^2 \text{.} \]
 
+\noindent
+Taking the derivative and solving for the root yields:
+
+\begin{aligncustom}
+  \frac{df}{dy} = 5 + 2(y-2) &=0 \\
+                  2 (y-2)  &= -5 \\
+                  y&= 2 - 5/2 \\
+                  y= -1/2 \text{.}
+\end{aligncustom}
+
+\noindent
+Clearly this is an invalid root since the parabola is strictly positive.
