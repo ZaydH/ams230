@@ -6,8 +6,33 @@
 
 This can be framed as the constrained optimization problem below.
 
-\[ \min \norm{x} \text{ s.t. } a\transpose x + \alpha \ge 0 \text{.}\]
+\[ \min f(x)=\sum_i x_i^2 \text{ s.t. } a\transpose x + \alpha \ge 0 \text{.}\]
 
+\noindent
+The gradient of $f(x)$ equals:
 
+\[\nabla f(x) = (2x_1,\ldots,2x_n) \text{.} \]
 
+\noindent
+Similarly, the gradient of the constraint $c(x)$: 
 
+\[\nabla c(x) = a \text{.}\]
+
+\noindent
+By the fourth KKT condition $\lambda^{*} c(x^{*}) = 0$ yielding:
+
+\begin{aligncustom}
+  \lambda(a\transpose x + \alpha) &= 0 \\
+  a\transpose x = -\alpha
+\end{aligncustom}
+
+\noindent
+for $\lambda \ne 0$. Therefore,
+
+\begin{aligncustom}
+  \nabla f(x) &= \lambda \nabla c(x) \\
+  2x &= \lambda a \\
+  2a\transpose x &= \lambda \norm{a}^2 \\
+  -2 \alpha &=\lambda \norm{a}^2 \\
+  \frac{-2\alpha}{\norm{a}^2} &= \lambda
+\end{aligncustom}
