@@ -6,3 +6,28 @@
   
   \[\frac{\norm{x_{k+1}-\xopt}}{\norm{x_k-\xopt}} \le r,~~~~\text{for all $k$ sufficiently large}  \text{.}\]
 \end{problem}
+
+The Jacobian of this system of non-linear equations equals:
+
+\[J(x_k) = \left[\frac{\partial\mathbf{f}}{\partial x_1},\ldots,\frac{\partial\mathbf{f}}{\partial x_n},\right] \text{.}\]
+
+\noindent
+For this function, the Jacobian is simply $J=qx^{q-1}$.  Therefore,
+
+\begin{aligncustom}
+%  J(x_k)p_k &=-r(x_k)\\
+  p_k       &=-\frac{r(x_k)}{J(x_k)} \\
+            &=-\frac{x^q}{qx^{q-1}} \\
+            &=-\frac{1}{q}x
+\end{aligncustom}
+
+\noindent
+Since $\xopt=0$ and $x\in\mathbb{R},$ this makes the ratio:
+
+\begin{aligncustom}
+  \frac{\norm{x_k+p_k}}{\norm{x_k}} &= \\
+  \frac{x_k+p_k}{x_k} &= \\
+  \frac{x_k-(1/q)x_k}{x_k} &= \\
+  \boxed{\frac{q-1}{q}} &\leq r\text{.}
+\end{aligncustom}
+
