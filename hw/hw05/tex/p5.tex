@@ -6,9 +6,32 @@
   \[\min f(x,y)=(x-1)^2  + (y-2)^2 ~~~~~~ \text{subject to } (x-1)^2 = 5y \text{.} \]
 \end{problem}
 
+The gradient of $f$ is:
+
+\[\nabla f =  \begin{bmatrix}
+                2(x-1)\\
+                2(y-2)
+              \end{bmatrix} \text{.}\]
+
+\noindent
+Rewrite $c_1(x,y)=(x-1)^2-5y=0$.  Its gradient is:
+
+\[\nabla c_1 =  \begin{bmatrix}
+                  2(x-1)\\
+                  -5
+                \end{bmatrix} \text{.}\]
+
 \begin{subproblem}
   Find all the KKT points for this problem.  Is the LICQ satisfied?
 \end{subproblem}
+
+Lagrangian multiplier $\lambda$ only holds when $\nabla f = \lambda \nabla c_1$.  In the case of the first dimension, $\nabla f = \lambda \nabla c_1$.  There are two possible cases:
+
+\noindent
+\textit{Case~\#1}: $\lambda=1$.  This means $2(y-2)=-5$ making $y=-1/2$.  Clearly, this is not possible so we can drop this case.
+
+\noindent
+\text{Case~\#2}: $x=1$.  This makes $y=0$ and $\lambda=4/5$.
 
 \begin{subproblem}
   Which of these points are solutions?
