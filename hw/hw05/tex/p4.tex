@@ -4,4 +4,17 @@
   Prove that when the KKT conditions (12.34) and the LICQ are satisfied at a given point $\xopt$, the Lagrange multiplier $\lambda^{*}$ in (12.34) is unique.
 \end{problem}
 
+By the first KKT condition, it holds that:
 
+\[ \nabla \mathcal{L}(\xopt \lopt) = \nabla f - \sum_I \lopt_i \nabla c_i(\xopt) = 0 \text{.}\]
+
+\noindent
+This can be rewritten as a matrix equation as shown below:
+
+\begin{aligncustom}
+  \sum_i \lopt_i \nabla c_i(\xopt) &= \nabla f \\
+  \left[\nabla c_1(\xopt)~\cdots~\nabla c_k(\xopt)\right] [\lambda_1,\cdots,\lambda_k]\transpose &= \nabla f \text{.}
+\end{aligncustom}
+
+\noindent
+Since the constraint gradients are linearly independent by LICQ property, then matrix ${\left[\nabla c_1(\xopt)~\cdots~\nabla c_k(\xopt)\right]}$ is invertible.  By the Invertible Matrix Theorem, the solution for ${[\lambda_1,\cdots,\lambda_k]\transpose}$ is unique making all of the Lagrange multipliers unique.

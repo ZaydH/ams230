@@ -31,9 +31,9 @@ For a single constraint, Lagrangian multiplier $\lambda_1$ only holds when $\nab
 \textit{Case~\#1}: $\lambda=1$.  This means $2(y-2)=-5$ making $y=-1/2$.  Clearly, this not valid so we can drop this case.
 
 \noindent
-\text{Case~\#2}: $x=1$.  Trivially, this makes $y=0$ and $\lambda_1=4/5$.  Therefore, $\xopt=(1,0)$.  Clearly then 
+\text{Case~\#2}: $x=1$.  Trivially, this makes $y=0$ and $\lambda_1=4/5$.  Therefore, $(\xopt,y^{*})=(1,0)$.  Clearly then 
 
-\[\nabla \mathcal{L}(x,y,\lambda_1)=\nabla (f(x,y)-\lambda_1 c_1(x,y)) = 0 \] 
+\[\nabla \mathcal{L}\left(0,1,\frac{4}{5}\right)=\nabla f(1,0)-\frac{4}{5} \nabla c_1(1,0) = \vec{0} \] 
 
 \noindent
 and $c_1(1,0)=0$ satisfying Eq.~(12.34a) and Eq.~(12.34b).  Since there is only an equality constraint, we can ignore KKT inequality constraints Eq.~(12.34c) and Eq.~(12.34d).  In addition, Eq.~(12.34e) follows from proving $c_1(\xopt)=0$.
@@ -44,7 +44,7 @@ Since there is only a single constraint, LICQ is established by showing only tha
   Which of these points are solutions?
 \end{subproblem}
 
-The point $(1,0)$ is a solution.
+The point $(\xopt,y^{*})=(1,0)$ is a solution.
 
 \begin{subproblem}
   By directly substituting the constraint into the objective function and eliminating the variable~$x$, we obtain an unconstrained optimization problem.  Show that the solutions of this problem cannot be solutions to the original problem.

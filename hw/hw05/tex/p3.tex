@@ -1,6 +1,6 @@
 \begin{problem}\label{prob:03}%%
   Exercise~12.14 in Nocedal and Wright (assume that $a$ is not a zero vector).
-  
+
   Consider the half space defined by $H=\{x\in \mathbb{R}^n \vert a\transpose x + \alpha \geq 0 \}$ where $a\in \mathbb{R}^n$ and $\alpha \in \mathbb{R}$ are given.  Formulate and solve the optimization problem for finding the point $x$ in $H$ that has the smallest Euclidian norm.
 \end{problem}
 
@@ -9,46 +9,47 @@ This can be framed as the constrained optimization problem below.
 \[ \min f(x)=\sum_i x_i^2 \text{ s.t. } a\transpose x + \alpha \ge 0 \text{.}\]
 
 \noindent
-If $\alpha > 0$, then trivially the $\xopt$ that minimizes the $f(x)$ is the zero vector since $f(x)=0$.  For all other $x \ne \vec{0}$, $f(x)$ is strictly positive.  
+If $\alpha \ge 0$, then $f(x)$ is minimized at $\xopt =\vec{0}$ since $f(\vec{0})=0$.  For all other $x \ne \vec{0}$, $f(x)$ is strictly positive.   This also means $\lopt=0$.
 
 Consider the more interesting case when $\alpha$ is less than~0.  First, the gradient of $f(x)$ equals:
 
 \[\nabla f(x) = (2x_1,\ldots,2x_n) \text{.} \]
 
 \noindent
-Similarly, the gradient of the constraint $c(x)$: 
+Similarly, the gradient of the constraint $c(x)$ is:
 
 \[\nabla c(x) = a \text{.}\]
 
 \noindent
-By the first KKT condition, 
+By the first KKT condition,
 
 \begin{aligncustom}
-  \mathcal{L}(\xopt,\lambda^{*}) = \nabla f(\xopt) -\lambda^{*} \nabla c(\xopt) &= 0\\
-  2 \xopt - \lambda^{*} a = 0 \\
-  \xopt = \frac{\lambda^{*}}{2}a \text{.}
+  \mathcal{L}(\xopt,\lopt) = \nabla f(\xopt) - \lopt \nabla c(\xopt) &= 0\\
+  2 \xopt - \lopt a = 0 \\
+  \xopt = \frac{\lopt}{2}a \text{.}
 \end{aligncustom}
 
 \noindent
 By the fifth KKT condition,
 
 \begin{aligncustom}
-  \lambda^{*}c(\xopt) &= 0\\
-  \lambda^{*}(a\transpose \xopt +\alpha) &= 0
+  \lopt c(\xopt) &= 0\\
+  \lopt (a\transpose \xopt +\alpha) &= 0
 \end{aligncustom}
 
 \noindent
-$\lambda=0$ is not a valid value if $\alpha < 0$.  Instead continuing by the fourth KKT condition where $\lambda >0$,
+$\lopt=0$ is not a valid value if $\alpha < 0$.  Instead continuing by the fourth KKT condition where $\lopt >0$,
 
 \begin{aligncustom}
   a\transpose \xopt +\alpha &= 0 \\
-  a\transpose \left(\frac{\lambda^{*}}{2}a\right) &= -\alpha \\
-  \lambda^{*} &= -\frac{2\alpha}{\norm{a}^2}
+  a\transpose \left(\frac{\lopt}{2}a\right) &= -\alpha \\
+  \lopt &= -\frac{2\alpha}{\norm{a}^2}
 \end{aligncustom}
 
 \noindent
-This makes 
+This makes
 
 \[\boxed{\xopt = -\frac{\alpha}{\norm{a}^2}a} \text{.}\]
 
-Since $\alpha$ is negative, $\lambda^{*}$ is positive satisfying the third KKT condition.  We already proved above the fourth and fifth KKT conditions.
+\noindent
+Since $\alpha$ is negative, $\lopt$ is positive satisfying the fourth KKT condition.  It is also trivial to see the third and fifth KKT conditions hold for these values of $\xopt$ and $\lopt$.  The second KKT condition does not apply since there are no equality constraints.  LICQ also holds since $\nabla c=a\ne\vec{0}$.
