@@ -17,4 +17,4 @@ This can be rewritten as a matrix equation as shown below:
 \end{aligncustom}
 
 \noindent
-Since the constraint gradients are linearly independent by LICQ property, then matrix ${\left[\nabla c_1(\xopt)~\cdots~\nabla c_k(\xopt)\right]}$ is invertible.  By the Invertible Matrix Theorem, the solution for ${[\lambda_1,\cdots,\lambda_k]\transpose}$ is unique making all of the Lagrange multipliers unique.
+Since the constraint gradients are linearly independent by LICQ property, then matrix ${\left[\nabla c_1(\xopt)~\cdots~\nabla c_k(\xopt)\right]}$ is full rank.  For a one-to-one matrix transformation of the form $Ax=b$ where $A$ is full rank, then $x$ is either unique or inconsistent for any $b$.  In this case, $[\lambda_1,\cdots,\lambda_k]\transpose$ exists by the KKT conditions, meaning this vector and in turn the Lagrange multipliers are unique.
